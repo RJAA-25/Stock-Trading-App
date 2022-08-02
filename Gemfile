@@ -23,6 +23,7 @@ gem "devise"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  gem 'rspec-rails'
 end
 
 group :development do
@@ -35,10 +36,9 @@ group :development do
 end
 
 group :test do
-  # gem "capybara"
-  # gem "selenium-webdriver"
-  # gem "webdrivers"
-  gem 'rspec-rails'
+  gem "capybara"
+  gem "selenium-webdriver"
+  gem "webdrivers"
   gem 'database_rewinder'
   gem 'factory_bot_rails'
   gem 'shoulda-matchers'
