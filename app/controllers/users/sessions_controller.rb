@@ -11,6 +11,10 @@ class Users::SessionsController < Devise::SessionsController
   
   protected
   def after_sign_in_path_for(resource)
-    trader_dashboard_path
+    if resource.role == "trader"
+      trader_dashboard_path
+    else 
+      admin_dashboard_path
+    end
   end
 end
