@@ -10,28 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_30_040241) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_02_154210) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "transactions", force: :cascade do |t|
-    t.integer "user_id"
-    t.string "type"
-    t.string "status"
-    t.decimal "amount", precision: 10, scale: 2
-    t.decimal "price", precision: 10, scale: 2
-    t.decimal "total_cost", precision: 10, scale: 2
+  create_table "users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "users", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
-    t.string "role"
+    t.string "role", default: "trader"
+    t.string "status", default: "pending"
     t.decimal "balance", precision: 10, scale: 2, default: "0.0"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
   end
 
 end
