@@ -1,0 +1,23 @@
+<h1>Edit Trader Account</h1>
+<%= link_to "Cancel", account_path(@account) %>
+<%= render "partials/navigation" %>
+
+<%= form_with(scope: @account, url: account_path(@account), method: :patch) do |f| %>
+
+  <div>
+    <%= f.label :first_name %><br/>
+    <%= f.text_field :first_name %>
+  </div>
+
+  <div>
+    <%= f.label :last_name %><br/>
+    <%= f.text_field :last_name %>
+  </div>
+  
+  <div>
+    <%= f.label :email %><br/>
+    <%= f.email_field :email %>
+  </div>
+
+  <%= f.submit "Update Trader" %>
+<% end %>

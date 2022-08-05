@@ -1,0 +1,11 @@
+<h1>All Trader Accounts</h1>
+<%= link_to "Create", new_account_path %>
+<%= render "partials/navigation" %>
+
+<% @accounts.each do |account| %>
+  <div>
+    <p><%= "#{account.last_name.capitalize}, #{account.first_name.capitalize}" %></p>
+    <p><%= account.status %></p>
+    <%= link_to "View", account_path(account) %>
+  </div>
+<% end %>

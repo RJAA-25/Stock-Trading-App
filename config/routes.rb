@@ -9,12 +9,13 @@ Rails.application.routes.draw do
     post "login" => "users/sessions#create", as: :user_session
     delete "logout" => "users/sessions#destroy", as: :destroy_user_session
     get "register" => "users/registrations#new", as: :register
+    get ":role/profile/edit" => "users/registrations#edit", as: :user_edit
   end
   scope "trader" do
     get "dashboard" => "traders#dashboard", as: :trader_dashboard
   end
   scope "admin" do
     get "dashboard" => "admins#dashboard", as: :admin_dashboard
-    # get "trader/:id/info" => "admins#show_trader", as: :admin_trader_info
+    resources :accounts
   end
 end

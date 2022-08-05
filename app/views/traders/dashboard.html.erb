@@ -4,6 +4,7 @@
 
 <div>
   <p><%= "#{current_user.last_name}, #{current_user.first_name}" %></p>
-  <p>Role: <%= current_user.role.capitalize %></p>
+  <p>Status: <%= current_user.status.capitalize %></p>
   <p>ID#: <%= current_user.id %></p>
+  <%= link_to "Edit", user_edit_path(current_user.role) %>
 </div>

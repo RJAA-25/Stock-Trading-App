@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Users::RegistrationsController < Devise::RegistrationsController
+  before_action :role_access_restriction, only: [:edit]
   before_action :configure_sign_up_params, only: [:create]
   before_action :configure_account_update_params, only: [:update]
 
@@ -52,6 +53,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
 
   protected
+  def role_access_restriction
+    unless params[:role] == current_user.role
+      redirect_to user_edit_path(current_user.role)
+    end
+  end
+
   def configure_sign_up_params
     devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name])
   end
