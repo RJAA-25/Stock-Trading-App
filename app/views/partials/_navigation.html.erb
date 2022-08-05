@@ -1,0 +1,9 @@
+<hr>
+<% if current_user.role == "admin" %>
+  <div>
+    <%= link_to "Dashboard", admin_dashboard_path %> | 
+    <%= link_to "Accounts", accounts_path %> |
+    <%= link_to "Transactions" %>
+  </div>
+<% end %>
+<hr>

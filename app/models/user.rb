@@ -1,6 +1,9 @@
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :rememberable, :validatable
 
+  has_one :portfolio, dependent: :destroy
+  has_many :properties, through: :portfolio
+
   validates :first_name, presence: true
   validates :last_name, presence: true
   # validates :email, presence: true
