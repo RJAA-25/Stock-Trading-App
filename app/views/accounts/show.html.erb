@@ -1,0 +1,18 @@
+<h1>Trader Profile</h1>
+<%= render "partials/navigation" %>
+<div>
+  <h2>Account Details</h2>
+  <p>Name: <%= "#{@account.last_name.capitalize}, #{@account.first_name.capitalize}" %></p>
+  <p>Email: <%= @account.email %></p>
+  <p>Status: <%= @account.status.capitalize %></p>
+  <%= link_to "Edit", edit_account_path(@account) %>
+</div>
+
+<div>
+  <h2>Trading Portfolio</h2>
+  <!--- >
+  <div>Stock 1</div>
+  <div>Stock 2</div>
+  <div>Stock 3</div>
+  -->
+</div>
