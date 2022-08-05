@@ -5,3 +5,11 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+
+# functioning code 
+#run in terminal rails db:seed 
+# or rails db:setup
+#fetch data from api
+# then put into stock db 
+# ['MSFT', 'AAPL'].each do |market| 
+# end 
