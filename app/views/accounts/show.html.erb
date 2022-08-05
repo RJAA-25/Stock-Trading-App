@@ -5,7 +5,8 @@
   <p>Name: <%= "#{@account.last_name.capitalize}, #{@account.first_name.capitalize}" %></p>
   <p>Email: <%= @account.email %></p>
   <p>Status: <%= @account.status.capitalize %></p>
-  <%= link_to "Edit", edit_account_path(@account) %>
+  <%= link_to "Edit", edit_account_path(@account) %> |
+  <%= link_to "Delete", account_path(@account), data: { turbo_method: :delete, turbo_confirm: "This will delete current trader account and all relevant data. Proceed?" } %>
 </div>
 
 <div>
