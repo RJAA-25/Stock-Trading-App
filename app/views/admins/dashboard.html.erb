@@ -7,3 +7,27 @@
   <p>ID#: <%= current_user.id %></p>
   <%= link_to "Edit", user_edit_path(current_user.role) %>
 </div>
+
+<h2>Notice</h2>
+<div>
+  <p>There are <strong><%= pending_trader_count %> pending</strong> trader accounts waiting for approval.</p>
+</div>
+
+<h2>Statistics</h2>
+<div>
+  <h3>Accounts <%= trader_count %></h3>
+  <p>Pending <%= pending_trader_count %></p>
+  <p>Approved <%= approved_trader_count %></p>
+</div>
+
+<!-- Future features to be implemented -->
+<div>
+  <h3>Transactions n</h3>
+  <p>Buy n</p>
+  <p>Sell n</p>
+</div>
+<div>
+  <h3>Stocks</h3>
+  <p>Most Buys n</p>
+  <p>Most Sells n</p>
+</div>

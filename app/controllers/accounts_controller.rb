@@ -1,6 +1,6 @@
 class AccountsController < ApplicationController
   before_action :authenticate_user!
-  before_action :role_access_restriction
+  before_action :admin_access_restriction
   before_action :set_account, only: [:show, :edit, :update]
 
   def index
@@ -43,12 +43,6 @@ class AccountsController < ApplicationController
 
 
   private
-  def role_access_restriction
-    unless current_user.role == "admin"
-      redirect_to trader_dashboard_path
-    end    
-  end
-
   def set_account 
     @account = User.find(params[:id])
   end
