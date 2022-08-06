@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   get 'stocks/index'
   get 'stocks/new'
-  get 'portfolio/index'
+  resources :portfolio
   root to: "pages#home"
   devise_for :users, module: "users", skip: [:sessions]
   devise_scope :user do
