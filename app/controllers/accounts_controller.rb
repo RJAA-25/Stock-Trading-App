@@ -20,8 +20,8 @@ class AccountsController < ApplicationController
       flash[:notice] = "Trader Account has been created successfully"
       redirect_to account_path(@account)
     else
-      flash[:alert] = "Oh no! Something went wrong. Check inputs carefully"
-      render :new
+      flash.now[:alert] = "Oh no! Something went wrong. Check inputs carefully."
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -33,7 +33,7 @@ class AccountsController < ApplicationController
       flash[:notice] = "Trader Account has been updated successfully"
       redirect_to account_path(@account)
     else
-      flash[:alert] = "Oh no! Something went wrong. Check inputs carefully"
+      flash.now[:alert] = "Oh no! Something went wrong. Check inputs carefully."
       render :edit, status: :unprocessable_entity
     end
   end
