@@ -10,16 +10,16 @@
 
 <h2>Notice</h2>
 <div>
-  <p>There are <strong><%= pending_trader_count %> pending</strong> trader accounts waiting for approval. 
+  <p>There are <strong><%= pending_trader_count(@traders) %> pending</strong> trader accounts waiting for approval. 
     <%= link_to "Resolve", accounts_path %>
   </p>
 </div>
 
 <h2>Statistics</h2>
 <div>
-  <h3>Accounts <%= trader_count %></h3>
-  <p>Pending <%= pending_trader_count %></p>
-  <p>Approved <%= approved_trader_count %></p>
+  <h3>Accounts <%= @traders.count %></h3>
+  <p>Pending <%= pending_trader_count(@traders) %></p>
+  <p>Approved <%= approved_trader_count(@traders) %></p>
 </div>
 
 <!-- Future features to be implemented -->
