@@ -2,4 +2,8 @@
 <%# <%= portfolio.overall_worth %>
 
 
-<%= link_to "Create a portfolio", :controller => :portfolio, :action => :new  %>
+<% if @portfolio %>
+    <h2>You have a portfolio</h2>
+    <% else %>
+    <%= link_to "Create a portfolio", portfolio_index_path, data: {turbo_method: :post}  %>
+<% end %>

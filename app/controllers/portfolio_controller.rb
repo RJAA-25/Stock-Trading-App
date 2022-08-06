@@ -7,12 +7,9 @@ class PortfolioController < ApplicationController
   end
 
   def create 
-    @user.portfolio.create(overall_worth: 0)
-    redirect_to portfolio/index
-  end 
-
-  def new 
-    @portfolio = Portfolio.new
+    current_user.create_portfolio(overall_worth: 0)
+    # @portfolio = Portfolio.create()
+    redirect_to portfolio_index_path
   end 
 end
 
