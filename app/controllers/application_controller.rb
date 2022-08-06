@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+
   def admin_access_restriction
     unless current_user.role == "admin"
       redirect_to trader_dashboard_path

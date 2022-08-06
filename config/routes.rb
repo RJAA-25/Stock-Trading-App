@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'stocks/index'
+  get 'stocks/new'
   root to: "pages#home"
   devise_for :users, module: "users", skip: [:sessions]
   devise_scope :user do
@@ -10,6 +12,7 @@ Rails.application.routes.draw do
   end
   scope "trader" do
     get "dashboard" => "traders#dashboard", as: :trader_dashboard
+    resources :portfolio, only: [:index, :create]
   end
   scope "admin" do
     get "dashboard" => "admins#dashboard", as: :admin_dashboard

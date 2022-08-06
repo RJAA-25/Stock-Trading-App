@@ -20,6 +20,8 @@ gem "bootsnap", require: false
 # gem "sassc-rails"
 # gem "image_processing", "~> 1.2"
 gem "devise"
+gem 'iex-ruby-client'
+# gem "rest-client"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
