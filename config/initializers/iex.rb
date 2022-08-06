@@ -1,5 +1,10 @@
 IEX::Api.configure do |config| 
-	config.publishable_token = Rails.application.credentials.iex[:publishable_token]
-	config.secret_token = Rails.application.credentials.iex[:secret_token]
-	config.endpoint = Rails.application.credentials.iex[:endpoint]
+	# Production
+		# config.publishable_token = Rails.application.credentials.iex.production[:publishable_token]
+		# config.secret_token = Rails.application.credentials.iex.production[:secret_token]
+		# config.endpoint = Rails.application.credentials.iex.production[:endpoint]
+	# Sandbox
+		config.publishable_token = Rails.application.credentials.iex.sandbox[:publishable_token]
+		config.secret_token = Rails.application.credentials.iex.sandbox[:secret_token]
+		config.endpoint = Rails.application.credentials.iex.sandbox[:endpoint]
 end
