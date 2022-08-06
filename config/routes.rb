@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
+  # Root Page
   root to: "pages#home"
+
+  # Devise Routes
   devise_for :users, module: "users", skip: [:sessions]
   devise_scope :user do
     get "login" => "users/sessions#new", as: :new_user_session
@@ -8,9 +11,15 @@ Rails.application.routes.draw do
     get "register" => "users/registrations#new", as: :register
     get ":role/profile/edit" => "users/registrations#edit", as: :user_edit
   end
+
+  # Trader Routes
   scope "trader" do
     get "dashboard" => "traders#dashboard", as: :trader_dashboard
+    get "portfolio" => "portfolio#index", as: :portfolio
+    post "portfolio" => "portfolio#create", as: :create_portfolio
   end
+
+  # Admin Routes
   scope "admin" do
     get "dashboard" => "admins#dashboard", as: :admin_dashboard
     resources :accounts

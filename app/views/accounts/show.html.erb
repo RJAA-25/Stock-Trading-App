@@ -16,6 +16,13 @@
 
 <div>
   <h2>Trading Portfolio</h2>
+  <% if @account.portfolio == nil %>
+    <p>Portfolio is yet to be initialized</p>
+  <% end %>
+  <% if @account.status == "pending" %>
+    <p>Trader account is yet to be approved</p>
+  <% end %>
+  
   <!--- >
   <div>Stock 1</div>
   <div>Stock 2</div>
