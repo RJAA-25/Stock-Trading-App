@@ -25,4 +25,10 @@ Rails.application.routes.draw do
     resources :accounts
     patch "accounts/:id/approve" => "accounts#approve", as: :approve_account
   end
+
+  # Shared Routes
+  scope "market" do
+    resources :stocks, only: [:index, :show]
+    post "stocks" => "stocks#check", as: :check_stock
+  end
 end

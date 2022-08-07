@@ -3,14 +3,16 @@
   <div>
     <%= link_to "Dashboard", admin_dashboard_path %> | 
     <%= link_to "Accounts", accounts_path %> |
-    <%= link_to "Transactions" %>
+    <%= link_to "Stocks", stocks_path %>
   </div>
 <% end %>
 
 <% if current_user.role == "trader" %>
   <div>
     <%= link_to "Dashboard", trader_dashboard_path %> | 
-    <%= link_to "Portfolio", portfolio_path %>
+    <%= link_to "Portfolio", portfolio_path %> |
+    <%= link_to "Stocks", stocks_path %>
+
   </div>
 <% end %>
 <hr>
