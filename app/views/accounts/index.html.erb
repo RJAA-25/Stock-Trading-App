@@ -2,10 +2,28 @@
 <%= link_to "Create", new_account_path %>
 <%= render "partials/navigation" %>
 
-<% @accounts.each do |account| %>
+<% unless @pending.empty? %>
   <div>
-    <p><%= "#{account.last_name.capitalize}, #{account.first_name.capitalize}" %></p>
-    <p><%= account.status %></p>
-    <%= link_to "View", account_path(account) %>
+    <h2>Pending Accounts</h2>
+      <% @pending.each do |account| %>
+        <div>
+          <p><%= "#{account.last_name.capitalize}, #{account.first_name.capitalize}" %></p>
+          <p><%= account.email %></p>
+          <%= link_to "View", account_path(account) %>
+        </div>
+      <% end %>
+  </div>
+<% end %>
+
+<% unless @approved.empty? %>
+  <div>
+    <h2>Approved Accounts</h2>
+      <% @approved.each do |account| %>
+        <div>
+          <p><%= "#{account.last_name.capitalize}, #{account.first_name.capitalize}" %></p>
+          <p><%= account.email %></p>
+          <%= link_to "View", account_path(account) %>
+        </div>
+      <% end %>
   </div>
 <% end %>

@@ -6,4 +6,11 @@
     <%= link_to "Transactions" %>
   </div>
 <% end %>
+
+<% if current_user.role == "trader" %>
+  <div>
+    <%= link_to "Dashboard", trader_dashboard_path %> | 
+    <%= link_to "Portfolio", portfolio_path %>
+  </div>
+<% end %>
 <hr>

@@ -1,9 +1,15 @@
-<h1>Your Portfolio </h1>
-<%# <%= portfolio.overall_worth %>
+<h1>Trader Portfolio </h1>
+<%= render "partials/navigation" %>
 
-
-<% if @portfolio %>
-    <h2>You have a portfolio</h2>
-    <% else %>
-    <%= link_to "Create a portfolio", portfolio_index_path, data: {turbo_method: :post}  %>
+<% if @portfolio && current_user.status == "approved" %>
+  <p>Overall Worth: <%= @portfolio.overall_worth %></p>
+<% else %>
+	<h2>Notice</h2>
+	<h3>To begin trading stocks:</h3>
+	<p><%= "[DONE]" if @portfolio %> Initialize Trader Portfolio</p>
+	<p><%= "[DONE]" if current_user.status == "approved" %> Trader Account approved</p>
+	
+	<% if @portfolio.nil? %>
+		<%= link_to "Initialize Portfolio", create_portfolio_path, data: { turbo_method: :post } %>			
+	<% end %>
 <% end %>
