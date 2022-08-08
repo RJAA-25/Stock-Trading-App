@@ -1,10 +1,12 @@
 class AccountsController < ApplicationController
   before_action :authenticate_user!
   before_action :admin_access_restriction
-  before_action :set_account, only: [:show, :edit, :update, :destroy]
+  before_action :set_account, only: [:show, :edit, :update, :destroy, :approve]
 
   def index
     @accounts = User.where(role: "trader").order(last_name: :asc)
+    @pending = @accounts.select {|account| account.status == "pending"}
+    @approved = @accounts.select {|account| account.status == "approved"}
   end
 
   def show
@@ -42,6 +44,12 @@ class AccountsController < ApplicationController
     @account.destroy
     flash[:alert] = "Trader Account has been deleted successfully"
     redirect_to accounts_path, status: :see_other
+  end
+
+  def approve
+    @account.update(status: "approved")
+    flash[:notice] = "Trader account has been approved"
+    redirect_to account_path(@account)
   end
 
 

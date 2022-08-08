@@ -1,2 +1,17 @@
-<h1>Stocks#index</h1>
-<p>Find me in app/views/stocks/index.html.erb</p>
+<h1>All Stocks</h1>
+<%= render "partials/navigation" %>
+
+<%= form_with(url: check_stock_path) do |f| %>
+  <%= f.text_field :search, placeholder: "Symbol" %>
+  <%= f.submit "Search" %>
+<% end %>
+
+<% @stocks.each do |stock| %>
+  <div>
+    <p>Symbol: <%= stock.symbol %></p>
+    <p>Company: <%= stock.name %></p>
+    <p>Price: <%= stock.latest_price %></p>
+    <%= link_to "View", stock_path(stock) %>
+  </div>
+  <hr>
+<% end %>

@@ -1,13 +1,9 @@
 module AccountsHelper
-  def trader_count
-    User.where(role: "trader").count
-  end
-
-  def pending_trader_count
-    User.where(role:"trader", status: "pending").count 
+  def pending_count(traders)
+    traders.count { |trader| trader.status == "pending" }
   end
   
-  def approved_trader_count
-    User.where(role: "trader", status:"approved").count
+  def approved_count(traders)
+    traders.count { |trader| trader.status == "approved" }
   end
 end

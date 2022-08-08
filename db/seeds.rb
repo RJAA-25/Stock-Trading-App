@@ -1,15 +1,31 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
-#   Character.create(name: "Luke", movie: movies.first)
+# Initialize Admin Account
+admin_account = {
+  first_name: "Eluder",
+  last_name: "Admin",
+  email: "admin@eluder.com",
+  password: "eluder2022",
+  role: "admin"
+}
+User.create(admin_account)
 
-# functioning code 
-#run in terminal rails db:seed 
-# or rails db:setup
-#fetch data from api
-# then put into stock db 
-# ['MSFT', 'AAPL'].each do |market| 
-# end 
+# Drop Existing Stock Objects
+# Stock.destroy_all
+# Seed Stock Model
+client = IEX::Api::Client.new
+top10 = client.stock_market_list(:mostactive)
+
+top10.each do |stock|
+  company = client.company(stock.symbol)
+  logo = client.logo(stock.symbol)
+  stock_params = {
+    symbol: stock.symbol,
+    name: stock.company_name,
+    latest_price: stock.latest_price,
+    exchange: company.exchange,
+    sector: company.sector,
+    industry: company.industry,
+    description: company.description,
+    logo: logo.url
+  }
+  Stock.create(stock_params)
+end

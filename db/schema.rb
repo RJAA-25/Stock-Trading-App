@@ -15,7 +15,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_06_145703) do
   enable_extension "plpgsql"
 
   create_table "portfolios", force: :cascade do |t|
-    t.decimal "overall_worth", precision: 10, scale: 2, default: "0.0"
+    t.decimal "overall_worth", default: "0.0"
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -24,7 +24,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_06_145703) do
 
   create_table "properties", force: :cascade do |t|
     t.integer "stock_id"
-    t.decimal "quantity", precision: 10, scale: 2, default: "0.0"
+    t.decimal "quantity", default: "0.0"
     t.bigint "portfolio_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -32,8 +32,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_06_145703) do
   end
 
   create_table "stocks", force: :cascade do |t|
+    t.string "symbol"
     t.string "name"
-    t.decimal "current_price"
+    t.decimal "latest_price"
+    t.string "exchange"
+    t.string "sector"
+    t.string "industry"
+    t.text "description"
+    t.string "logo"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -60,7 +66,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_06_145703) do
     t.string "last_name"
     t.string "role", default: "trader"
     t.string "status", default: "pending"
-    t.decimal "balance", precision: 10, scale: 2, default: "0.0"
+    t.decimal "balance", default: "0.0"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
