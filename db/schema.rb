@@ -46,7 +46,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_06_145703) do
 
   create_table "transactions", force: :cascade do |t|
     t.integer "stock_id"
-    t.string "type"
+    t.string "action"
     t.decimal "quantity"
     t.decimal "price"
     t.decimal "total_amount"

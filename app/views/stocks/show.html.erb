@@ -5,6 +5,8 @@
 <img src="<%= @stock.logo %>" alt="Company Logo">
 <p>Symbol: <%= @stock.symbol %></p>
 <p>Price: <%= @stock.latest_price %></p>
+<%= button_to "Buy", buy_transaction_path(@stock) %>
+<%= button_to "Sell", sell_transaction_path(@stock) %>
 
 <div>
   <h2>Company Profile</h2>
