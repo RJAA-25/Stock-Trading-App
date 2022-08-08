@@ -15,8 +15,8 @@ Rails.application.routes.draw do
   # Trader Routes
   scope "trader" do
     get "dashboard" => "traders#dashboard", as: :trader_dashboard
-    resources :portfolio, only: [:index, :create]
-    resources :transactions, only: [:index]
+    get "portfolio" => "portfolio#index", as: :portfolio
+    post "portfolio" => "portfolio#create", as: :create_portfolio
   end
 
   # Admin Routes
