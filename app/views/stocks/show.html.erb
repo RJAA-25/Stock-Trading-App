@@ -1,0 +1,15 @@
+<h1>Stock Details</h1>
+<%= render "partials/navigation" %>
+
+<h2><%= @stock.name %></h2>
+<img src="<%= @stock.logo %>" alt="Company Logo">
+<p>Symbol: <%= @stock.symbol %></p>
+<p>Price: <%= @stock.latest_price %></p>
+
+<div>
+  <h2>Company Profile</h2>
+  <p>Exchange: <%= @stock.exchange %></p>
+  <p>Sector: <%= @stock.sector %></p>
+  <p>Industry: <%= @stock.industry %></p>
+  <p><%= @stock.description %></p>
+</div>
