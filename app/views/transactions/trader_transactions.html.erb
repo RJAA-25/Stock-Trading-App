@@ -1,0 +1,9 @@
+<h1>Your Transactions</h1>
+
+<% @transactions.each do |transaction| %>
+<p>Transaction No: <%= transaction.id %></p>
+<p>Name of stock: <%= stock.find.where(stock_id: transaction.stock_id).name %></p>
+<p>Number of stocks: <%= transaction.quantity %></p>
+<%= link_to "Full details of transaction", %>  
+
+<%# otw to making the link_to show, and make the show controller and view of transaction %>

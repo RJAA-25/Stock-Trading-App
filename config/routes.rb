@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   scope "trader" do
     get "dashboard" => "traders#dashboard", as: :trader_dashboard
     resources :portfolio, only: [:index, :create]
+    resources :transactions, only: [:index]
   end
   scope "admin" do
     get "dashboard" => "admins#dashboard", as: :admin_dashboard
