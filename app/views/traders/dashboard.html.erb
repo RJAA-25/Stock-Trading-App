@@ -6,5 +6,6 @@
   <p><%= "#{current_user.last_name}, #{current_user.first_name}" %></p>
   <p>Status: <%= current_user.status.capitalize %></p>
   <p>ID#: <%= current_user.id %></p>
+  <p>Balance: <%= current_user.balance.to_s %></p>
   <%= link_to "Edit", user_edit_path(current_user.role) %>
 </div>

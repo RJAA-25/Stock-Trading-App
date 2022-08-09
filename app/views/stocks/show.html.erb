@@ -6,6 +6,9 @@
 <p>Symbol: <%= @stock.symbol %></p>
 <p>Price: <%= @stock.latest_price %></p>
 
+<%= render "transactions/buy_form" %>
+<%= render "transactions/sell_form" %>
+
 <div>
   <h2>Company Profile</h2>
   <p>Exchange: <%= @stock.exchange %></p>

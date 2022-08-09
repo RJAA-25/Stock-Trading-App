@@ -3,6 +3,8 @@ class PortfolioController < ApplicationController
 
   def index
     @portfolio = current_user.portfolio
+    @properties = current_user.properties
+    @stocks = Stock.all
   end
 
   def create 
