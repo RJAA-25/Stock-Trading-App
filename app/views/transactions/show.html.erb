@@ -1,4 +1,5 @@
 <h1>Transaction Details</h1>
+<%= render "partials/navigation" %>
 
 <h2>Stock Name: <%= @stock.name %></h2>
 <p>Stock Symbol: <%= @stock.symbol %></p>
@@ -6,3 +7,4 @@
 <p>Quantity: <%= @transaction.quantity %></p>
 <p>Total Amount: <%= @transaction.total_amount %></p>
 <p>Transaction Type: <%= @transaction.action %></p>
+
