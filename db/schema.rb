@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_03_102905) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_09_102440) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "portfolios", force: :cascade do |t|
-    t.decimal "overall_worth", default: "0.0"
+    t.decimal "overall_worth", precision: 10, scale: 2, default: "0.0"
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -24,7 +24,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_03_102905) do
 
   create_table "properties", force: :cascade do |t|
     t.integer "stock_id"
-    t.decimal "quantity", default: "0.0"
+    t.decimal "quantity", precision: 10, scale: 2, default: "0.0"
     t.bigint "portfolio_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -44,6 +44,18 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_03_102905) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "transactions", force: :cascade do |t|
+    t.integer "stock_id"
+    t.string "action"
+    t.decimal "quantity"
+    t.decimal "price"
+    t.decimal "total_amount"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_transactions_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -54,10 +66,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_03_102905) do
     t.string "last_name"
     t.string "role", default: "trader"
     t.string "status", default: "pending"
-    t.decimal "balance", default: "0.0"
+    t.decimal "balance", precision: 10, scale: 2, default: "0.0"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
   add_foreign_key "portfolios", "users"
   add_foreign_key "properties", "portfolios"
+  add_foreign_key "transactions", "users"
 end
