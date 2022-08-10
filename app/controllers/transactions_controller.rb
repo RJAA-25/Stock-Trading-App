@@ -3,7 +3,7 @@ class TransactionsController < ApplicationController
   def trader_transactions
     @transactions = current_user.transactions 
     @stocks = Stock.all
-  end
+  end 
 
   def all_transactions 
     @transactions = Transaction.all

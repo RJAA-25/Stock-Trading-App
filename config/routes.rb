@@ -23,6 +23,8 @@ Rails.application.routes.draw do
     get "transactions/:id" => "transactions#show", as: :transaction
     post "transactions/:id/buy" => "transactions#buy", as: :buy_transaction
     post "transactions/:id/sell" => "transactions#sell", as: :sell_transaction
+
+    get "portfolio/properties/:id" => "properties#show", as: :property 
   end
 
   # Admin Routes
