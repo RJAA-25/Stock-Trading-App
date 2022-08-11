@@ -2,7 +2,7 @@ class PortfolioController < ApplicationController
   before_action :trader_access_restriction
 
   def index
-    
+      
   end
 
   def create 

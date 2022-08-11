@@ -3,27 +3,17 @@
 
 <h2>All Transactions</h2>
 <% @all_transactions.each do |transaction| %>
-  <%= render "partials/transaction", transaction: transaction %>
+  <%= render "partials/transaction", transaction: transaction, stock: nil %>
 <% end %>
 
 <!--
 <h2>Buy Transactions</h2>
 <% @buy_transactions.each do |transaction| %>
-  <p>Transaction No: <%= transaction.id %></p>
-  <p><%= set_stock(@stocks, transaction.stock_id).name %></p>
-  <p><%= set_stock(@stocks, transaction.stock_id).symbol %></p>
-  <p>Number of stocks: <%= transaction.quantity %></p>
-  <p>Type: <%= transaction.action.upcase %></p>
-  <%= link_to "View", transaction_path(transaction) %>
+  <%= render "partials/transaction", transaction: transaction, stock: nil %>
 <% end %>
 
 <h2>Sell Transactions</h2>
 <% @sell_transactions.each do |transaction| %>
-  <p>Transaction No: <%= transaction.id %></p>
-  <p><%= set_stock(@stocks, transaction.stock_id).name %></p>
-  <p><%= set_stock(@stocks, transaction.stock_id).symbol %></p>
-  <p>Number of stocks: <%= transaction.quantity %></p>
-  <p>Type: <%= transaction.action.upcase %></p>
-  <%= link_to "View", transaction_path(transaction) %>
+  <%= render "partials/transaction", transaction: transaction, stock: nil %>
 <% end %>
 -->
