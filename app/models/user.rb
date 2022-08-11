@@ -14,4 +14,19 @@ class User < ApplicationRecord
   scope :traders, -> { where(role: "trader") }
   scope :pending, -> { where(status: "pending") }
   scope :approved, -> { where(status: "approved") }
+
+  before_create :set_initial_balance
+  before_validation :set_role, :set_status
+  
+  def set_initial_balance
+    self.balance = 10000
+  end
+
+  def set_role
+    self.role = self.role ||= "trader"
+  end
+
+  def set_status
+    self.status = self.status ||= "pending"
+  end
 end
