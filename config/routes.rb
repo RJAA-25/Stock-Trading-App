@@ -16,10 +16,10 @@ Rails.application.routes.draw do
   scope "trader" do
     get "dashboard" => "traders#dashboard", as: :trader_dashboard
 
-    get "portfolio" => "portfolio#index", as: :portfolio
+    get "portfolio" => "traders#portfolio", as: :trader_portfolio
     post "portfolio" => "portfolio#create", as: :create_portfolio
 
-    get "transactions" => "transactions#trader_transactions", as: :trader_transactions
+    get "transactions" => "traders#transactions", as: :trader_transactions
     get "transactions/:id" => "transactions#show", as: :transaction
     post "transactions/:id/buy" => "transactions#buy", as: :buy_transaction
     post "transactions/:id/sell" => "transactions#sell", as: :sell_transaction

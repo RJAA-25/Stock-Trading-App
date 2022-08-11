@@ -3,9 +3,41 @@
 <%= render "partials/navigation" %>
 
 <div>
+  <h2>Account</h2>
   <p><%= "#{current_user.last_name}, #{current_user.first_name}" %></p>
-  <p>Status: <%= current_user.status.capitalize %></p>
-  <p>ID#: <%= current_user.id %></p>
-  <p>Balance: <%= current_user.balance.to_s %></p>
+  <p><%= current_user.email %></p>
+  <p><%= current_user.status.capitalize %></p>
+  <p>Balance: <%= format_currency(current_user.balance) %></p>
   <%= link_to "Edit", user_edit_path(current_user.role) %>
 </div>
+
+<% if @portfolio && current_user.status == "approved" %>
+  <div>
+  <h2>Portfolio</h2>
+    <p>Worth: <%= format_currency(@portfolio.overall_worth) %></p>
+    <%= link_to "View", trader_portfolio_path %>
+  </div>
+
+  <h2>Latest Transactions</h2>
+  <% if !@transactions.empty? %>
+    <div>
+      <% @transactions.each do |transaction| %>
+        <p><%= format_date(transaction.created_at) %></p>
+      <% end %>
+      <%= link_to "See More", trader_transactions_path %>
+    </div>
+  <% else %>
+    <div>
+      <p>No transactions made</p>
+    </div>
+  <% end %>
+
+<% else %>
+
+  <h2>You're almost there!</h2>
+  <%= render "partials/notice", status: current_user.status, portfolio: @portfolio %>
+  <%= link_to "Get Started", trader_portfolio_path %>
+
+<% end %>
+
+
