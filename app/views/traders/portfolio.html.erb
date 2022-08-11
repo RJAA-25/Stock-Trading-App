@@ -1,0 +1,39 @@
+<h1>Trader Portfolio </h1>
+<%= render "partials/navigation" %>
+
+<% if @portfolio && current_user.status == "approved" %>
+
+  <p>Overall Worth: <%= @portfolio.overall_worth %></p>
+
+  <h2>Properties</h2>
+  <% if !@properties.empty? %>
+
+    <% @properties.each do |property| %>
+      <div>
+        <h2><%= set_stock(@stocks, property.stock_id).name %></h2>
+        <p>Stock ID: <%= property.stock_id %></p>
+        <p>Stocks Owned: <%= property.quantity %></p>
+      </div>
+      <%= link_to "View", property_path(property) %>
+    <% end %> 
+
+  <% else %>
+    <p>Go on. Don't be shy. Add some stocks!</p>
+    <%= link_to "Check Market", stocks_path %>
+  <% end %>
+
+<% else %>
+
+  <h2>Heads Up!</h2>
+  <%= render "partials/notice", status: current_user.status, portfolio: @portfolio %>
+	<% if !@portfolio %>
+
+    <div>
+      <h3>Setup Portfolio</h3>
+      <p>All it takes is single click! It's that easy!</p>
+      <%= link_to "Setup Portfolio", create_portfolio_path, data: { turbo_method: :post } %>		
+    </div>
+    
+	<% end %>
+
+<% end %>

@@ -1,15 +1,6 @@
 class TransactionsController < ApplicationController
   include TransactionModule
   before_action :setup_transaction, only: [:buy,:sell]
-  
-  def trader_transactions
-    @transactions = current_user.transactions 
-    @stocks = Stock.all
-  end 
-
-  def all_transactions 
-    @transactions = Transaction.all
-  end
 
   def show 
     @transaction = Transaction.find(params[:id])
