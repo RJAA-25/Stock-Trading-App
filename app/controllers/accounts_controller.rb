@@ -65,4 +65,11 @@ class AccountsController < ApplicationController
   def account_user_params
     params.require(:user).permit(:first_name, :last_name, :email, :password)
   end
+
+  def generate_random_password(num)
+    arr = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
+    password = ""
+    num.times { password += arr.shuffle[(rand*arr.length).floor] }
+    password
+  end
 end
