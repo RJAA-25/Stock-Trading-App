@@ -5,4 +5,6 @@ class Transaction < ApplicationRecord
   validates :quantity, presence: true 
   validates :price, presence: true 
   validates :total_amount, presence: true 
+
+  default_scope { order(created_at: :desc) }
 end
