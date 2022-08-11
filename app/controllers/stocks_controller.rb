@@ -7,10 +7,13 @@ class StocksController < ApplicationController
   end
 
   def show
+    @portfolio = current_user.portfolio
+    @property = current_user.properties.where(stock_id: @stock.id).first
+    @transactions = current_user.transactions.where(stock_id: @stock.id).first(3)
   end
 
   def check
-    search_symbol = params[:search].upcase
+    search_symbol = params[:search].gsub(/\s+/, "").upcase
     @result = Stock.find_by(symbol: search_symbol)
     if @result
       redirect_to stock_path(@result)
