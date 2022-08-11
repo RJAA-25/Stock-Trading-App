@@ -10,6 +10,7 @@
 			<p>Stock ID: <%= property.stock_id %></p>
 			<p>Stocks Owned: <%= property.quantity %></p>
 		</div>
+		<%= link_to "View", property_path(property) %>
 	<% end %>
 
 <% else %>

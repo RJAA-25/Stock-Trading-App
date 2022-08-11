@@ -6,4 +6,5 @@
   <p>Name of stock: <%= set_stock(@stocks, transaction.stock_id).name %></p>
   <p>Number of stocks: <%= transaction.quantity %></p>
   <p>Type: <%= transaction.action %></p>
+  <%= link_to "View", transaction_path(transaction) %>
 <% end %>
