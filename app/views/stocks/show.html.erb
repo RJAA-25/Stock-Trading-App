@@ -22,6 +22,8 @@
 
     <% if @property %>
       <p>You own <%= @property.quantity %>  <%= "stock".pluralize(@property.quantity) %> of <%= @stock.symbol %></p>
+    <% else %>
+      <p>You own 0 stocks of <%= @stock.symbol %></p>
     <% end %>
 
     <% if @transactions %>

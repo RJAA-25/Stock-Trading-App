@@ -6,9 +6,9 @@
 
 <p>Stock Name: <%= @stock.name %></p>
 <p>Stock Symbol: <%= @stock.symbol %></p>
-<p>Price: <%= @transaction.price %></p>
+<p>Price: <%= format_currency(@transaction.price) %></p>
 <p>Quantity: <%= @transaction.quantity %></p>
-<p>Total Amount: <%= @transaction.total_amount %></p>
+<p>Total Amount: <%= format_currency(@transaction.total_amount) %></p>
 <p>Transaction Type: <%= @transaction.action.upcase %></p>
 <p><%= format_date(@transaction.created_at) %></p>
 
