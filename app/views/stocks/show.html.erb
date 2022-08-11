@@ -28,6 +28,7 @@
       <h2>Recent Transactions (<%= @stock.symbol %>)</h2>
       <% @transactions.each do |transaction| %>
         <%= render "partials/transaction", transaction: transaction, stock: @stock %>
+        <%= link_to "View", trader_transaction_path(transaction) %>
       <% end %>
     <% end %>
 
@@ -37,6 +38,19 @@
     <%= link_to "Get Started", trader_portfolio_path %>
   <% end %>
 
+<% end %>
+
+<% if current_user.role == "admin" %>
+  <h2>Recent Transactions (<%= @stock.symbol %>)</h2>
+  <% if @recent_transactions %>
+    <% @recent_transactions.each do |transaction| %>
+      <p><%= "#{transaction.user.last_name}, #{transaction.user.first_name}" %></p>
+      <%= render "partials/transaction", transaction: transaction, stock: @stock %>
+      <%= link_to "View", admin_transaction_path(transaction) %>
+    <% end %>
+  <% else %>
+    <p>There are no recent transactions with this stock</p>
+  <% end %>
 <% end %>
 
 

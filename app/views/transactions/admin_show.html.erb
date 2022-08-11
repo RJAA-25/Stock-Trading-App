@@ -2,6 +2,8 @@
 <%= render "partials/navigation" %>
 
 <h2>Transaction No: <%= @transaction.id %></h2>
+<p>Trader: <%= "#{@trader.last_name}, #{@trader.first_name}" %></p>
+
 <p>Stock Name: <%= @stock.name %></p>
 <p>Stock Symbol: <%= @stock.symbol %></p>
 <p>Price: <%= @transaction.price %></p>
@@ -10,8 +12,6 @@
 <p>Transaction Type: <%= @transaction.action.upcase %></p>
 <p><%= format_date(@transaction.created_at) %></p>
 
-<% if current_user.role == "trader" %>
-  <%= link_to "All Transactions", trader_transactions_path %>
-<% else %>
 
-<% end %>
+
+<%= link_to "All Transactions", admin_transactions_path %>

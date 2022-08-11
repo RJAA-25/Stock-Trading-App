@@ -11,6 +11,7 @@ class User < ApplicationRecord
   validates :status, presence: true, inclusion: { in: ["pending","approved"] }
   validates :balance, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
+  default_scope { order(last_name: :asc) }
   scope :traders, -> { where(role: "trader") }
   scope :pending, -> { where(status: "pending") }
   scope :approved, -> { where(status: "approved") }

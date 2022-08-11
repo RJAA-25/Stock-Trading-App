@@ -1,0 +1,13 @@
+<h1>Transaction Details</h1>
+<%= render "partials/navigation" %>
+
+<h2>Transaction No: <%= @transaction.id %></h2>
+<p>Stock Name: <%= @stock.name %></p>
+<p>Stock Symbol: <%= @stock.symbol %></p>
+<p>Price: <%= @transaction.price %></p>
+<p>Quantity: <%= @transaction.quantity %></p>
+<p>Total Amount: <%= @transaction.total_amount %></p>
+<p>Transaction Type: <%= @transaction.action.upcase %></p>
+<p><%= format_date(@transaction.created_at) %></p>
+
+<%= link_to "All Transactions", trader_transactions_path %>

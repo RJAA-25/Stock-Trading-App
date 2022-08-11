@@ -4,16 +4,19 @@
 <h2>All Transactions</h2>
 <% @all_transactions.each do |transaction| %>
   <%= render "partials/transaction", transaction: transaction, stock: nil %>
+  <%= link_to "View", trader_transaction_path(transaction) %>
 <% end %>
 
 <!--
 <h2>Buy Transactions</h2>
 <% @buy_transactions.each do |transaction| %>
   <%= render "partials/transaction", transaction: transaction, stock: nil %>
+  <%= link_to "View", trader_transaction_path(transaction) %>
 <% end %>
 
 <h2>Sell Transactions</h2>
 <% @sell_transactions.each do |transaction| %>
   <%= render "partials/transaction", transaction: transaction, stock: nil %>
+  <%= link_to "View", trader_transaction_path(transaction) %>
 <% end %>
 -->

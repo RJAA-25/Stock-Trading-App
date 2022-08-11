@@ -10,6 +10,7 @@ class StocksController < ApplicationController
     @portfolio = current_user.portfolio
     @property = current_user.properties.where(stock_id: @stock.id).first
     @transactions = current_user.transactions.where(stock_id: @stock.id).first(3)
+    @recent_transactions = Transaction.where(stock_id: @stock.id).first(3)
   end
 
   def check

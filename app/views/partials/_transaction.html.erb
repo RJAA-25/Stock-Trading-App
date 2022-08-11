@@ -6,4 +6,3 @@
   <p>Price: <%= format_currency(stock.latest_price) %></p>
   <p>Number of stocks: <%= transaction.quantity %></p>
   <p>Type: <%= transaction.action.upcase %></p>
-  <%= link_to "View", transaction_path(transaction) %>

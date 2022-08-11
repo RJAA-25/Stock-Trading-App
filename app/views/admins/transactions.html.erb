@@ -1,0 +1,23 @@
+<h1>Your Transactions</h1>
+<%= render "partials/navigation" %>
+
+<h2>All Transactions</h2>
+<% @all_transactions.each do |transaction| %>
+  <p><%= "#{transaction.user.last_name}, #{transaction.user.first_name}" %></p>
+  <%= render "partials/transaction", transaction: transaction, stock: nil %>
+  <%= link_to "View", admin_transaction_path(transaction) %>
+<% end %>
+
+<!--
+<h2>Buy Transactions</h2>
+<% @buy_transactions.each do |transaction| %>
+  <p><%= "#{transaction.user.last_name}, #{transaction.user.first_name}" %></p>
+  <%= link_to "View", admin_transaction_path(transaction) %>
+<% end %>
+
+<h2>Sell Transactions</h2>
+<% @sell_transactions.each do |transaction| %>
+  <p><%= "#{transaction.user.last_name}, #{transaction.user.first_name}" %></p>
+  <%= link_to "View", admin_transaction_path(transaction) %>
+<% end %>
+-->

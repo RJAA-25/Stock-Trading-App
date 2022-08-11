@@ -3,8 +3,7 @@
 <%= render "partials/navigation" %>
 <div>
   <p><%= "#{current_user.last_name}, #{current_user.first_name}" %></p>
-  <p>Role: <%= current_user.role.capitalize %></p>
-  <p>ID#: <%= current_user.id %></p>
+  <p><%= current_user.role.upcase %></p>
   <%= link_to "Edit", user_edit_path(current_user.role) %>
 </div>
 
@@ -22,16 +21,12 @@
   <h3>Accounts <%= @traders.count %></h3>
   <p>Pending <%= pending_count(@traders) %></p>
   <p>Approved <%= approved_count(@traders) %></p>
+  <%= link_to "See Accounts", accounts_path  %>
 </div>
 
-<!-- Future features to be implemented -->
 <div>
-  <h3>Transactions n</h3>
-  <p>Buy n</p>
-  <p>Sell n</p>
-</div>
-<div>
-  <h3>Stocks</h3>
-  <p>Most Buys n</p>
-  <p>Most Sells n</p>
+  <h3>Transactions <%= @transactions.count %></h3>
+  <p>Buy <%= @transactions.buy.count %></p>
+  <p>Sell <%= @transactions.sell.count %></p>
+  <%= link_to "See Transactions", admin_transactions_path %>
 </div>

@@ -12,4 +12,5 @@
 <h2>Recent Transactions (<%= @stock.symbol %>)</h2>
 <% @transactions.each do |transaction| %>
   <%= render "partials/transaction", transaction: transaction, stock: @stock %>
+  <%= link_to "View", trader_transaction_path(transaction) %>
 <% end %>

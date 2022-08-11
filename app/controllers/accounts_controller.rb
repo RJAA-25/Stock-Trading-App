@@ -4,12 +4,15 @@ class AccountsController < ApplicationController
   before_action :set_account, only: [:show, :edit, :update, :destroy, :approve]
 
   def index
-    @accounts = User.where(role: "trader").order(last_name: :asc)
-    @pending = @accounts.select {|account| account.status == "pending"}
-    @approved = @accounts.select {|account| account.status == "approved"}
+    @pending = User.traders.pending
+    @approved = User.traders.approved
   end
 
   def show
+    @portfolio = @account.portfolio
+    @properties = @account.properties
+    @transactions = @account.transactions.first(3)
+    @stocks = Stock.all
   end
 
   def new
@@ -18,6 +21,7 @@ class AccountsController < ApplicationController
 
   def create
     @account = User.new(account_user_params)
+    @account.status = "approved"
     if @account.save
       flash[:notice] = "Trader Account has been created successfully"
       redirect_to account_path(@account)
