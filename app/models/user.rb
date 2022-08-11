@@ -17,7 +17,13 @@ class User < ApplicationRecord
 
   before_create :set_initial_balance
   before_validation :set_role, :set_status
+  before_save :set_capitalize
   
+  def set_capitalize
+    self.first_name = self.first_name.capitalize
+    self.last_name = self.last_name.capitalize
+  end
+
   def set_initial_balance
     self.balance = 10000
   end
