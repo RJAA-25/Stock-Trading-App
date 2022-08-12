@@ -4,8 +4,13 @@ class AdminsController < ApplicationController
   
   def dashboard
     @traders = User.traders
+    @transactions = Transaction.all
   end
 
-  
-
+  def transactions
+    @all_transactions = Transaction.all
+    @buy_transactions = Transaction.buy
+    @sell_transactions = Transaction.sell
+    @stocks = Stock.all
+  end
 end

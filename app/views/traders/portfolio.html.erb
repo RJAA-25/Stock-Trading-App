@@ -9,16 +9,15 @@
   <% if !@properties.empty? %>
 
     <% @properties.each do |property| %>
-      <div>
-        <h2><%= set_stock(@stocks, property.stock_id).name %></h2>
-        <p>Stock ID: <%= property.stock_id %></p>
-        <p>Stocks Owned: <%= property.quantity %></p>
-      </div>
+      <% stock = set_stock(@stocks, property.stock_id) %>
+      <div> 
+      <%= render "partials/property", stock: stock, property: property %>
       <%= link_to "View", property_path(property) %>
+      </div>
     <% end %> 
 
   <% else %>
-    <p>Go on. Don't be shy. Add some stocks!</p>
+    <p>You can now add stock properties to your porfolio.</p>
     <%= link_to "Check Market", stocks_path %>
   <% end %>
 

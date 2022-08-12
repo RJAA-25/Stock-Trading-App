@@ -68,7 +68,7 @@ module TransactionModule
       }
       new_property = portfolio.properties.create(property_params)
     end
-    redirect_to transaction_path(new_transaction)
+    redirect_to trader_transaction_path(new_transaction)
   end
 
 
@@ -94,7 +94,7 @@ module TransactionModule
       quantity: property.quantity - quantity
     }
     property.update(property_params)
-    redirect_to transaction_path(new_transaction)
+    redirect_to trader_transaction_path(new_transaction)
   end
 end
 

@@ -1,10 +1,18 @@
 class TransactionsController < ApplicationController
   include TransactionModule
+  before_action :trader_access_restriction, except: [:admin_show]
+  before_action :admin_access_restriction, only: [:admin_show]
   before_action :setup_transaction, only: [:buy,:sell]
 
-  def show 
+  def trader_show 
     @transaction = Transaction.find(params[:id])
     @stock = Stock.find(@transaction.stock_id)
+  end
+
+  def admin_show
+    @transaction = Transaction.find(params[:id])
+    @stock = Stock.find(@transaction.stock_id)
+    @trader = @transaction.user
   end
 
   def buy

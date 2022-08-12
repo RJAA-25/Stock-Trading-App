@@ -8,8 +8,6 @@ admin_account = {
 }
 User.create(admin_account)
 
-# Drop Existing Stock Objects
-# Stock.destroy_all
 # Seed Stock Model
 client = IEX::Api::Client.new
 top10 = client.stock_market_list(:mostactive)
@@ -21,6 +19,7 @@ top10.each do |stock|
     symbol: stock.symbol,
     name: stock.company_name,
     latest_price: stock.latest_price,
+    change_percent: stock.change_percent_s,
     exchange: company.exchange,
     sector: company.sector,
     industry: company.industry,

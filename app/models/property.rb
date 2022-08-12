@@ -3,4 +3,5 @@ class Property < ApplicationRecord
 
   validates :quantity, presence: true 
   
+  default_scope { order(quantity: :desc) }
 end

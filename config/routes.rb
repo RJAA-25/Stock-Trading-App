@@ -20,7 +20,7 @@ Rails.application.routes.draw do
     post "portfolio" => "portfolio#create", as: :create_portfolio
 
     get "transactions" => "traders#transactions", as: :trader_transactions
-    get "transactions/:id" => "transactions#show", as: :transaction
+    get "transactions/:id" => "transactions#trader_show", as: :trader_transaction
     post "transactions/:id/buy" => "transactions#buy", as: :buy_transaction
     post "transactions/:id/sell" => "transactions#sell", as: :sell_transaction
 
@@ -30,10 +30,12 @@ Rails.application.routes.draw do
   # Admin Routes
   scope "admin" do
     get "dashboard" => "admins#dashboard", as: :admin_dashboard
+    
     resources :accounts
     patch "accounts/:id/approve" => "accounts#approve", as: :approve_account
 
-    get "transactions" => "transactions#all_transactions", as: :all_transactions
+    get "transactions" => "admins#transactions", as: :admin_transactions
+    get "transactions/:id" => "transactions#admin_show", as: :admin_transaction
   end
 
   # Shared Routes
