@@ -2,18 +2,6 @@ class TradersController < ApplicationController
   before_action :authenticate_user!
   before_action :trader_access_restriction
 
-  # def overall_worth(id)
-  def portfolio_overall_worth
-        # @properties = Portfolio.find(id).properties 
-        overall_worth = 0 
-        # @properties.each do |prop| 
-        current_user.portfolio.properties.each do |prop|
-        price = Stock.find(prop.stock_id).latest_price 
-        overall_worth += prop.quantity * price 
-      end 
-    overall_worth
-  end 
-  
   def dashboard
     @portfolio =  current_user.portfolio
     @transactions = current_user.transactions.first(3)
@@ -32,4 +20,14 @@ class TradersController < ApplicationController
     @sell_transactions = current_user.transactions.sell
     @stocks = Stock.all
   end
+
+  private 
+  def portfolio_overall_worth
+        overall_worth = 0 
+        current_user.portfolio.properties.each do |prop|
+        price = Stock.find(prop.stock_id).latest_price 
+        overall_worth += prop.quantity * price 
+      end 
+    overall_worth
+  end 
 end
