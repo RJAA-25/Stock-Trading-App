@@ -3,7 +3,7 @@
 
 <% if @portfolio && current_user.status == "approved" %>
 
-  <p>Overall Worth: <%= @portfolio.overall_worth %></p>
+  <p>Overall Worth: <%= format_currency(@portfolio.overall_worth) %></p>
 
   <h2>Properties</h2>
   <% if !@properties.empty? %>
