@@ -5,7 +5,9 @@ class TradersController < ApplicationController
   def dashboard
     @portfolio =  current_user.portfolio
     @transactions = current_user.transactions.first(3)
-    @portfolio.update(overall_worth: portfolio_overall_worth)
+    if @portfolio 
+      @portfolio.update(overall_worth: portfolio_overall_worth(current_user))
+    end
   end
 
   def portfolio
@@ -22,9 +24,9 @@ class TradersController < ApplicationController
   end
 
   private 
-  def portfolio_overall_worth
-        overall_worth = 0 
-        current_user.portfolio.properties.each do |prop|
+  def portfolio_overall_worth(current_user)
+      overall_worth = 0 
+      current_user.properties.each do |prop|
         price = Stock.find(prop.stock_id).latest_price 
         overall_worth += prop.quantity * price 
       end 
