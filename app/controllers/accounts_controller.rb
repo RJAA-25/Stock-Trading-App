@@ -55,8 +55,8 @@ class AccountsController < ApplicationController
 
   def approve
     @account.update(status: "approved")
-    AccountMailer.with(user: @account).approve_email.deliver_now
     flash[:notice] = "Trader account has been approved"
+    AccountMailer.with(user: @account).approve_email.deliver_now
     redirect_to account_path(@account), status: 200
   end
 
