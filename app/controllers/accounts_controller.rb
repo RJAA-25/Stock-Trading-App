@@ -22,7 +22,10 @@ class AccountsController < ApplicationController
   def create
     @account = User.new(account_user_params)
     @account.status = "approved"
+    password = generate_random_password(10)
+    @account.password = password
     if @account.save
+      AccountMailer.with(user: @account, password: password).create_email.deliver_now
       flash[:notice] = "Trader Account has been created successfully"
       redirect_to account_path(@account)
     else
@@ -52,6 +55,7 @@ class AccountsController < ApplicationController
 
   def approve
     @account.update(status: "approved")
+    AccountMailer.with(user: @account).approve_email.deliver_now
     flash[:notice] = "Trader account has been approved"
     redirect_to account_path(@account)
   end
@@ -63,7 +67,7 @@ class AccountsController < ApplicationController
   end
 
   def account_user_params
-    params.require(:user).permit(:first_name, :last_name, :email, :password)
+    params.require(:user).permit(:first_name, :last_name, :email)
   end
 
   def generate_random_password(num)
