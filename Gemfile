@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.1.2"
+ruby "3.1.0"
 
 gem "rails", "~> 7.0.3", ">= 7.0.3.1"
 gem "sprockets-rails"
@@ -35,6 +35,7 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   # gem "rack-mini-profiler"
   # gem "spring"
+  gem 'letter_opener', '~> 1.8', '>= 1.8.1'
 end
 
 group :test do
