@@ -28,14 +28,6 @@
     <% end %>
   </div>
 
-  <div>
-    <%= f.label :password %><br>
-    <%= f.password_field :password %>
-    <% @account.errors.full_messages_for(:password).each do |msg| %>
-      <p><%= msg %></p>
-    <% end %>
-  </div>
-
   <%= f.submit "Create Trader"%>
 <% end %>
 

@@ -153,6 +153,10 @@ GEM
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
     json (2.6.2)
+    launchy (2.5.0)
+      addressable (~> 2.7)
+    letter_opener (1.8.1)
+      launchy (>= 2.2, < 3)
     listen (3.7.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -342,6 +346,7 @@ DEPENDENCIES
   iex-ruby-client
   importmap-rails
   jbuilder
+  letter_opener (~> 1.8, >= 1.8.1)
   listen (~> 3.2)
   pg
   puma (~> 5.0)
@@ -363,7 +368,7 @@ DEPENDENCIES
   webmock
 
 RUBY VERSION
-   ruby 3.1.2p20
+   ruby 3.1.0p0
 
 BUNDLED WITH
    2.3.3
