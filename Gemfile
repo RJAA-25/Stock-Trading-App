@@ -22,6 +22,7 @@ gem "bootsnap", require: false
 gem "devise"
 gem 'iex-ruby-client'
 # gem "rest-client"
+gem "figaro"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
