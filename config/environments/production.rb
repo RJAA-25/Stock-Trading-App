@@ -64,7 +64,7 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
-  config.action_mailer.default_url_options = { host: "" }
+  config.action_mailer.default_url_options = { host: "eluder.herokuapp.com", protocol: "https://" }
 
   # GMail Configuration
   config.action_mailer.delivery_method = :smtp
