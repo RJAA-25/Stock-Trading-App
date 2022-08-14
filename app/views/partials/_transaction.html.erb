@@ -1,8 +1,0 @@
- <% if !stock %>
-   <% stock = set_stock(@stocks, transaction.stock_id) %>
- <% end %>
-
-  <p><%= stock.symbol %></p>
-  <p>Price: <%= format_currency(stock.latest_price) %></p>
-  <p>Number of stocks: <%= transaction.quantity %></p>
-  <p>Type: <%= transaction.action.upcase %></p>

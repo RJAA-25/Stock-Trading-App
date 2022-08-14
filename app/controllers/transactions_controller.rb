@@ -6,13 +6,10 @@ class TransactionsController < ApplicationController
 
   def trader_show 
     @transaction = Transaction.find(params[:id])
-    @stock = Stock.find(@transaction.stock_id)
   end
 
   def admin_show
     @transaction = Transaction.find(params[:id])
-    @stock = Stock.find(@transaction.stock_id)
-    @trader = @transaction.user
   end
 
   def buy

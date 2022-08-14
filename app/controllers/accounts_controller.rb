@@ -9,10 +9,7 @@ class AccountsController < ApplicationController
   end
 
   def show
-    @portfolio = @account.portfolio
-    @properties = @account.properties
-    @transactions = @account.transactions.first(3)
-    @stocks = Stock.all
+    @account.portfolio.update(overall_worth: compute_overall_worth(@account)) if @account.portfolio
   end
 
   def new
@@ -55,9 +52,9 @@ class AccountsController < ApplicationController
 
   def approve
     @account.update(status: "approved")
-    flash[:notice] = "Trader account has been approved"
     AccountMailer.with(user: @account).approve_email.deliver_now
-    redirect_to account_path(@account), status: 200
+    flash[:notice] = "Trader account has been approved"
+    redirect_to account_path(@account)
   end
 
 

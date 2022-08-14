@@ -1,3 +1,6 @@
+<%= render "partials/header" %>
+<%= render "partials/navigation" %>
+
 <h1>Edit <%= resource.role.capitalize %> Account</h1>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>

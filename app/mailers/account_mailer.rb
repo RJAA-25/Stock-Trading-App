@@ -1,5 +1,5 @@
 class AccountMailer < ApplicationMailer
-  default from: "accounts.admin@eluder.com"
+  default from: "Eluder Accounts Team"
 
   def register_email
     @user = params[:user]

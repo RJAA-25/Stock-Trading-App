@@ -1,17 +1,25 @@
-<h1>All Stocks</h1>
+<%= render "partials/header" %>
 <%= render "partials/navigation" %>
 
-<%= form_with(url: check_stock_path) do |f| %>
-  <%= f.text_field :search, placeholder: "Symbol" %>
-  <%= f.submit "Search" %>
-<% end %>
+<h1>Stock Listings</h1>
 
-<% @stocks.each do |stock| %>
-  <div>
-    <p>Symbol: <%= stock.symbol %></p>
-    <p>Company: <%= stock.name %></p>
-    <p>Price: <%= stock.latest_price %></p>
-    <%= link_to "View", stock_path(stock) %>
-  </div>
-  <hr>
-<% end %>
+<div>
+
+  <%= form_with(url: check_stock_path) do |f| %>
+
+    <%= f.text_field :search, placeholder: "Ticker | Symbol" %>
+    <%= f.submit "Search" %>
+
+  <% end %>
+
+</div>
+
+<div>
+
+  <% @stocks.each do |stock| %>
+
+    <%= render "partials/stock_item", stock: stock %>
+    <hr>
+  <% end %>
+
+</div>

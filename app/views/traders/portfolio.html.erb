@@ -1,38 +1,46 @@
-<h1>Trader Portfolio </h1>
+<%= render "partials/header" %>
 <%= render "partials/navigation" %>
+
+<h1>Trader Portfolio </h1>
+
+<% if !@portfolio %>
+
+  <div>
+    <h2>Setup Portfolio</h3>
+    <p>All it takes is single click! It's that easy!</p>
+    <%= link_to "Setup", create_portfolio_path, data: { turbo_method: :post } %>		
+  </div>
+  
+<% else %>
+
+  <div>
+    <p>Total Worth: <%= format_currency(@portfolio.overall_worth) %></p>
+    <p>Properties Owned: <%= @properties.count %></p>
+  </div>
+
+<% end %>
 
 <% if @portfolio && current_user.status == "approved" %>
 
-  <p>Overall Worth: <%= format_currency(@portfolio.overall_worth) %></p>
-
   <h2>Properties</h2>
+
   <% if !@properties.empty? %>
-
     <% @properties.each do |property| %>
-      <% stock = set_stock(@stocks, property.stock_id) %>
-      <div> 
-      <%= render "partials/property", stock: stock, property: property %>
-      <%= link_to "View", property_path(property) %>
-      </div>
+
+      <%= render "partials/property_item", admin: false, property: property %> 
+
     <% end %> 
-
   <% else %>
-    <p>You can now add stock properties to your porfolio.</p>
-    <%= link_to "Check Market", stocks_path %>
-  <% end %>
+    
+    <%= render "partials/permit", title: "Great! You're all set",
+      portfolio: @portfolio, status: current_user.status,
+      redirect: nil %>
 
+  <% end %>
 <% else %>
 
-  <h2>Heads Up!</h2>
-  <%= render "partials/notice", status: current_user.status, portfolio: @portfolio %>
-	<% if !@portfolio %>
-
-    <div>
-      <h3>Setup Portfolio</h3>
-      <p>All it takes is single click! It's that easy!</p>
-      <%= link_to "Setup Portfolio", create_portfolio_path, data: { turbo_method: :post } %>		
-    </div>
-    
-	<% end %>
+  <%= render "partials/permit", title: "You're almost there!",
+        portfolio: @portfolio, status: current_user.status,
+        redirect: nil %>
 
 <% end %>

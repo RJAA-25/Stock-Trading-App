@@ -1,58 +1,73 @@
-<h1>Stock Details</h1>
+<%= render "partials/header" %>
 <%= render "partials/navigation" %>
 
-<h2><%= @stock.name %></h2>
-<img src=<%= @stock.logo %> alt="Company Logo">
-<p>Symbol: <%= @stock.symbol %></p>
-<p>Price: <%= @stock.latest_price %></p>
-<p>Change Percent: <%= @stock.change_percent %></p>
-
+<h1>Stock Profile</h1>
+<%= link_to "Stock Listings", stocks_path %>
 <div>
-  <h2>Company Profile</h2>
-  <p>Exchange: <%= @stock.exchange %></p>
-  <p>Sector: <%= @stock.sector %></p>
-  <p>Industry: <%= @stock.industry %></p>
-  <p><%= @stock.description %></p>
+  <img src="<%= @stock.logo %>" alt="<%= @stock.name %>">
+
+  <div>
+    <h2><%= @stock.name %></h2>
+    <p>Symbol: <%= @stock.symbol %></p>
+    <p>Price: <%= @stock.latest_price %></p>
+    <p>Change Percent: <%= @stock.change_percent %></p>
+    <p><em>
+      Updated <%= @stock.updated_at.localtime.strftime("%l:%M %p %e %b %Y") %>
+    </em></p>
+  </div>
+
+  <div>
+     <p>Exchange: <%= @stock.exchange %></p>
+    <p>Sector: <%= @stock.sector %></p>
+    <p>Industry: <%= @stock.industry %></p>
+    <p><%= @stock.description %></p>
+  </div>
 </div>
+
 
 <% if current_user.role == "trader" %>
 
   <% if @portfolio && current_user.status == "approved" %>
+
     <%= render "transactions/buy_form" %>
     <%= render "transactions/sell_form" %>
 
-    <% if @property %>
-      <p>You own <%= @property.quantity %>  <%= "stock".pluralize(@property.quantity) %> of <%= @stock.symbol %></p>
-    <% else %>
-      <p>You own 0 stocks of <%= @stock.symbol %></p>
-    <% end %>
+    <%= render "partials/notice", title: "Before you trade,", check: { stock: @stock, property: @property } %>
 
     <% if @transactions %>
+
       <h2>Recent Transactions (<%= @stock.symbol %>)</h2>
+
       <% @transactions.each do |transaction| %>
-        <%= render "partials/transaction", transaction: transaction, stock: @stock %>
-        <%= link_to "View", trader_transaction_path(transaction) %>
+
+        <%= render "partials/transaction_item", transaction: transaction, time: false, admin: false %><br/>
+        
       <% end %>
     <% end %>
-
   <% else %>
-    <h2>You're almost there!</h2>
-    <%= render "partials/notice", status: current_user.status, portfolio: @portfolio %>
-    <%= link_to "Get Started", trader_portfolio_path %>
-  <% end %>
 
+    <%= render "partials/permit", title: "You're almost there!",
+        portfolio: @portfolio, status: current_user.status,
+        redirect: true %>
+
+  <% end %>
 <% end %>
 
 <% if current_user.role == "admin" %>
+
   <h2>Recent Transactions (<%= @stock.symbol %>)</h2>
+
   <% if !@recent_transactions.empty? %>
+
     <% @recent_transactions.each do |transaction| %>
-      <p><%= "#{transaction.user.last_name}, #{transaction.user.first_name}" %></p>
-      <%= render "partials/transaction", transaction: transaction, stock: @stock %>
-      <%= link_to "View", admin_transaction_path(transaction) %>
+   
+      <%= render "partials/transaction_item", transaction: transaction, time: false, admin: true %><br/>
+
     <% end %>
   <% else %>
+
     <p>There are no recent transactions with this stock</p>
+
   <% end %>
 <% end %>
 

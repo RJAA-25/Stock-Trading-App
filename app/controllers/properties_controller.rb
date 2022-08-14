@@ -3,7 +3,6 @@ class PropertiesController < ApplicationController
 
   def show
     @property = Property.find(params[:id])
-    @stock = Stock.find(@property.stock_id)
-    @transactions = current_user.transactions.where(stock_id: @property.stock_id)
+    @transactions = current_user.transactions.where(stock_id: @property.stock_id).includes(:stock)
   end
 end
