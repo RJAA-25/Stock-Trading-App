@@ -1,54 +1,66 @@
+<%= render "partials/header" %>
+<%= render "partials/navigation" %>
+
 <h1>Edit <%= resource.role.capitalize %> Account</h1>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "users/shared/error_messages", resource: resource %>
 
   <div class="field">
     <%= f.label :first_name %><br />
     <%= f.text_field :first_name %>
+    <% resource.errors.full_messages_for(:first_name).each do |msg| %>
+      <p><%= msg %></p>
+    <% end %>
   </div>
 
   <div class="field">
     <%= f.label :last_name %><br />
     <%= f.text_field :last_name %>
+    <% resource.errors.full_messages_for(:last_name).each do |msg| %>
+      <p><%= msg %></p>
+    <% end %>
   </div>
 
   <div class="field">
     <%= f.label :email %><br />
     <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    <% resource.errors.full_messages_for(:email).each do |msg| %>
+      <p><%= msg %></p>
+    <% end %>
   </div>
 
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-  <% end %>
-
   <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
+    <%= f.label :password %> <i>(Minimum <%= @minimum_password_length %> characters)</i><br />
     <%= f.password_field :password, autocomplete: "new-password" %>
-    <% if @minimum_password_length %>
-      <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
+    <% resource.errors.full_messages_for(:password).each do |msg| %>
+      <p><%= msg %></p>
     <% end %>
   </div>
 
   <div class="field">
     <%= f.label :password_confirmation %><br />
     <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+    <% resource.errors.full_messages_for(:password_confirmation).each do |msg| %>
+      <p><%= msg %></p>
+    <% end %>
   </div>
 
   <div class="field">
     <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
     <%= f.password_field :current_password, autocomplete: "current-password" %>
+    <% resource.errors.full_messages_for(:current_password).each do |msg| %>
+      <p><%= msg %></p>
+    <% end %>
   </div>
 
   <div class="actions">
-    <%= f.submit "Update" %>
+    <%= f.submit "Update Profile" %>
   </div>
 <% end %>
 
 <h3>Cancel my account</h3>
 
-<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
+<p>Delete Account <%= button_to "Delete", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
 
 <% if resource.role == "trader" %>
   <%= link_to "Return", trader_dashboard_path %>

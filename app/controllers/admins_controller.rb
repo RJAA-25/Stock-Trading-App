@@ -8,9 +8,8 @@ class AdminsController < ApplicationController
   end
 
   def transactions
-    @all_transactions = Transaction.all
-    @buy_transactions = Transaction.buy
-    @sell_transactions = Transaction.sell
-    @stocks = Stock.all
+    @all_transactions = Transaction.all.includes(:stock)
+    @buy_transactions = Transaction.buy.includes(:stock)
+    @sell_transactions = Transaction.sell.includes(:stock)
   end
 end

@@ -11,4 +11,8 @@ module ApplicationHelper
     stock = stocks_arr.select {|stock| stock.id == id }
     stock[0]
   end
+
+  def set_date(record)
+    record.created_at.localtime.to_date
+  end
 end

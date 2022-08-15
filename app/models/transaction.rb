@@ -1,5 +1,6 @@
 class Transaction < ApplicationRecord
   belongs_to :user
+  belongs_to :stock
 
   validates :action, presence: true, inclusion: { in: ["buy", "sell"] } 
   validates :quantity, presence: true 

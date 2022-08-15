@@ -1,35 +1,25 @@
 class TradersController < ApplicationController
   before_action :authenticate_user!
   before_action :trader_access_restriction
+  before_action :set_portfolio, except: [:transactions]
 
   def dashboard
-    @portfolio =  current_user.portfolio
-    @transactions = current_user.transactions.first(3)
-    if @portfolio 
-      @portfolio.update(overall_worth: portfolio_overall_worth(current_user))
-    end
+    @transactions = current_user.transactions.includes(:stock).first(3)
   end
 
   def portfolio
-    @portfolio = current_user.portfolio
-    @properties = current_user.properties
-    @stocks = Stock.all
+    @properties = current_user.properties.includes(:stock)
   end
 
   def transactions
-    @all_transactions = current_user.transactions
-    @buy_transactions = current_user.transactions.buy
-    @sell_transactions = current_user.transactions.sell
-    @stocks = Stock.all
+    @all_transactions = current_user.transactions.includes(:stock)
+    @buy_transactions = current_user.transactions.buy.includes(:stock)
+    @sell_transactions = current_user.transactions.sell.includes(:stock)
   end
 
   private 
-  def portfolio_overall_worth(current_user)
-      overall_worth = 0 
-      current_user.properties.each do |prop|
-        price = Stock.find(prop.stock_id).latest_price 
-        overall_worth += prop.quantity * price 
-      end 
-    overall_worth
-  end 
+  def set_portfolio
+    @portfolio =  current_user.portfolio
+    @portfolio.update(overall_worth: compute_overall_worth(current_user)) if @portfolio
+  end
 end

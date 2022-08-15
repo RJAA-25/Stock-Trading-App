@@ -1,10 +1,6 @@
 class PortfolioController < ApplicationController
   before_action :trader_access_restriction
 
-  def index
-      
-  end
-
   def create 
     current_user.create_portfolio(overall_worth: 0)
     flash[:notice] = "Trader Portfolio has been setup successfully"

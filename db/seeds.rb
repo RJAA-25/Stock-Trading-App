@@ -1,7 +1,7 @@
 # Initialize Admin Account
 admin_account = {
-  first_name: "Eluder",
-  last_name: "Admin",
+  first_name: "Admin",
+  last_name: "Eluder",
   email: "admin@eluder.com",
   password: "eluder2022",
   role: "admin"
