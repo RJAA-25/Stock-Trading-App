@@ -23,10 +23,10 @@ class AccountsController < ApplicationController
     @account.password = password
     if @account.save
       AccountMailer.with(user: @account, password: password).create_email.deliver_now
-      flash[:notice] = "Trader Account has been created successfully"
+      flash[:notice] = "Trader Account has been created successfully and will receive a notification email"
       redirect_to account_path(@account)
     else
-      flash.now[:alert] = "Oh no! Something went wrong. Check inputs carefully."
+      flash.now[:alert] = "Oh no, something went wrong! Check the form for incorrect inputs."
       render :new, status: :unprocessable_entity
     end
   end
@@ -39,7 +39,7 @@ class AccountsController < ApplicationController
       flash[:notice] = "Trader Account has been updated successfully"
       redirect_to account_path(@account)
     else
-      flash.now[:alert] = "Oh no! Something went wrong. Check inputs carefully."
+      flash.now[:alert] = "Oh no, something went wrong! Check the form for incorrect inputs"
       render :edit, status: :unprocessable_entity
     end
   end
@@ -53,7 +53,7 @@ class AccountsController < ApplicationController
   def approve
     @account.update(status: "approved")
     AccountMailer.with(user: @account).approve_email.deliver_now
-    flash[:notice] = "Trader account has been approved"
+    flash[:notice] = "Trader Account has been approved and will receive a notification email"
     redirect_to account_path(@account)
   end
 

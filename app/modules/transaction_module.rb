@@ -68,6 +68,8 @@ module TransactionModule
       }
       new_property = portfolio.properties.create(property_params)
     end
+    unit = quantity == 1 ? "unit" : "units"
+    flash[:notice] = "Successfully bought #{quantity} #{unit} of #{stock.symbol} stock"
     redirect_to trader_transaction_path(new_transaction)
   end
 
@@ -94,6 +96,8 @@ module TransactionModule
       quantity: property.quantity - quantity
     }
     property.update(property_params)
+    unit = quantity == 1 ? "unit" : "units"
+    flash[:notice] = "Successfully sold #{quantity} #{unit} of #{stock.symbol} stock"
     redirect_to trader_transaction_path(new_transaction)
   end
 end

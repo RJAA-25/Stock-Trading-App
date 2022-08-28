@@ -3,7 +3,7 @@ module StockModule
     client = IEX::Api::Client.new
     begin
       quote = client.quote(symbol)
-    rescue IEX::Errors::SymbolNotFoundError
+    rescue IEX::Errors::SymbolNotFoundError, IEX::Errors::ClientError
       quote = nil
     end
     if quote
