@@ -1,7 +1,6 @@
-<%= render "partials/header" %>
 <%= render "partials/navigation" %>
 
-<h1>Trader Portfolio </h1>
+<h1 class="mt-4 ml-4 text-2xl font-semibold">Trader Portfolio </h1>
 
 <% if !@portfolio %>
 
@@ -13,12 +12,14 @@
   
 <% else %>
 
+<div class="block p-6 max-w-sm bg-white rounded-lg border border-lime-500 shadow-md hover:bg-lime-500 dark:bg-lime-600 dark:border-lime-700 dark:hover:bg-lime-700">
   <div>
     <p>Total Worth: <%= format_currency(@portfolio.overall_worth) %></p>
     <p>Properties Owned: <%= @properties.count %></p>
   </div>
 
 <% end %>
+
 
 <% if @portfolio && current_user.status == "approved" %>
 
@@ -44,3 +45,4 @@
         redirect: nil %>
 
 <% end %>
+</div>

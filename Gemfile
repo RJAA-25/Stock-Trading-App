@@ -27,6 +27,7 @@ gem "figaro"
 group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   gem 'rspec-rails'
+  # gem "pg"
 end
 
 group :development do
@@ -51,3 +52,5 @@ group :test do
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
 end
+
+gem "tailwindcss-rails", "~> 2.0"

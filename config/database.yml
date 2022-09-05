@@ -3,9 +3,8 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   port: 5432
   adapter: postgresql
-  username: <%= ENV.fetch("DATABASE_USERNAME") {  } %>
-  password: <%= ENV.fetch("DATABASE_PASSWORD") {  } %>
-
+  username: <%= ENV.fetch("DATABASE_USERNAME") { 'eds_psql' } %>
+  password: <%= ENV.fetch("DATABASE_PASSWORD") { 'eds_psql_pass' } %>
 development:
   <<: *default
   database: stock_trading_development
