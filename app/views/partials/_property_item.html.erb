@@ -1,14 +1,17 @@
 <% admin ? path = "" : path ="/trader/portfolio/properties/#{property.id}" %>
-<%= link_to "#{path}" do %>
+<%= link_to "#{path}",
+  class: "flex items-center hover:bg-info border-r-4 border-secondary p-3 overflow-hidden" do %>
   
-  <div>
-    <img src="<%= property.stock.logo %>" 
-        alt="<%= property.stock.name %>" />
-    <div>
-      <h3><%= property.stock.name %></h3>
-      <p>Symbol: <%= property.stock.symbol %></p>
-      <p>Stocks Owned: <%= property.quantity %> <%= "unit".pluralize(property.quantity) %></p>
-    </div>
+  <img src="<%= property.stock.logo %>" 
+    alt="<%= property.stock.name %>"
+    class="object-scale-down bg-white w-20 h-20" />
+  <div class="p-3 flex-1 overflow-hidden">
+    <h3 class="font-bold text-xl truncate"><%= property.stock.name %></h3>
+    <span><%= property.stock.symbol %></span>
+  </div>
+  <div class="p-3 text-center">
+    <span class="block font-bold text-2xl"><%= property.quantity %></span>
+    <span class="text-xs">OWNED</span>
   </div>
 
 <% end %>

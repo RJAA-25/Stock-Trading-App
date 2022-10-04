@@ -24,7 +24,7 @@ module TransactionModule
     if property
       true
     else
-      flash[:alert] = "You do not own this stock"
+      flash[:alert] = "You do not own any #{stock.symbol} stock"
       redirect_to stock_path(stock) and return
     end
   end
@@ -33,7 +33,7 @@ module TransactionModule
     if owned >= quantity
       true
     else
-      flash[:alert] = "You do not own enough stocks"
+      flash[:alert] = "You do not own enough #{stock.symbol} stocks"
       redirect_to stock_path(stock) and return
     end
   end

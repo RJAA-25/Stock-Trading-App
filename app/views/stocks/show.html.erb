@@ -1,74 +1,201 @@
 <%= render "partials/header" %>
-<%= render "partials/navigation" %>
+<main class="flex-1 flex pb-20 lg:pb-0">
+  <%= render "partials/navigation", page: "Market" %>
+  <section class="flex-1 p-5 lg:px-10 max-w-full overflow-x-auto">
+    <%= render "partials/alerts" %>
 
-<h1>Stock Profile</h1>
-<%= link_to "Stock Listings", stocks_path %>
-<div>
-  <img src="<%= @stock.logo %>" alt="<%= @stock.name %>">
+    <!-- Title -->
+    <h1 class="font-bold text-secondary">Stock Profile</h1>
+    <h2 class="text-3xl lg:text-4xl mb-2 font-bold"><%= @stock.name %></h2>
+    <span class="text-xl mb-3"><%= @stock.symbol %></span>
 
-  <div>
-    <h2><%= @stock.name %></h2>
-    <p>Symbol: <%= @stock.symbol %></p>
-    <p>Price: <%= @stock.latest_price %></p>
-    <p>Change Percent: <%= @stock.change_percent %></p>
-    <p><em>
-      Updated <%= @stock.updated_at.localtime.strftime("%l:%M %p %e %b %Y") %>
-    </em></p>
-  </div>
+    <!-- Stock Profile -->
+    <div class="my-3 flex">
+      <img 
+        src="<%= @stock.logo %>" 
+        alt="<%= @stock.name %> Logo"
+        class="object-scale-down bg-white w-32 h-32" />
+      <label class="swap bg-secondary flex-1 relative text-center rounded-xl ml-3 md:hidden">
+        <input class="hidden" type="checkbox" />
 
-  <div>
-     <p>Exchange: <%= @stock.exchange %></p>
-    <p>Sector: <%= @stock.sector %></p>
-    <p>Industry: <%= @stock.industry %></p>
-    <p><%= @stock.description %></p>
-  </div>
-</div>
+        <div class="swap-off sm:flex sm:justify-center sm:gap-10">
+          <div class="">
+            <span class="font-bold text-3xl block"><%= format_currency(@stock.latest_price) %></span>
+            <span>PRICE</span>
+          </div>
+          <div class="hidden sm:block">
+            <span class="font-bold text-3xl block <%= @stock.change_percent.to_f >= 0 ? "text-success" : "text-error"%>"><%= @stock.change_percent %></span>
+            <span>CHANGE PERCENT</span>
+          </div>
+        </div>
+
+        <div class="swap-on sm:flex sm:justify-center">
+          <div class="sm:hidden">
+            <span class="font-bold text-3xl block <%= @stock.change_percent.to_f >= 0 ? "text-success" : "text-error"%>"><%= @stock.change_percent %></span>
+            <span>CHANGE PERCENT</span>
+          </div>
+          <div class="hidden sm:block">
+            <span>LAST UPDATE</span>
+            <span class="font-bold text-xl block"><%= format_date(@stock.updated_at.localtime) %></span>
+          </div>
+        </div>
+
+        <span class="absolute bottom-1 right-1 btn btn-circle btn-ghost btn-secondary">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zM12 2.25V4.5m5.834.166l-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243l-1.59-1.59" />
+          </svg>
+        </span>
+      </label>
+
+      <div class="hidden ml-3 md:flex md:flex-1 md:justify-evenly md:items-center ">
+        <div class="text-center">
+          <span class="block font-bold text-3xl lg:text-4xl"><%= format_currency(@stock.latest_price) %></span>
+          <span>PRICE</span>
+        </div>
+        <div class="text-center">
+          <span class="font-bold text-3xl block <%= @stock.change_percent.to_f >= 0 ? "text-success" : "text-error"%>"><%= @stock.change_percent %></span>
+            <span>CHANGE PERCENT</span>
+        </div>
+        <div class="text-center">
+          <span>LAST UPDATE</span>
+          <span class="block font-bold text-xl"><%= format_date(@stock.updated_at.localtime) %></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="my-5 sm:hidden">
+      <span>LAST UPDATE</span>
+      <span class="block font-bold text-xl"><%= format_date(@stock.updated_at.localtime) %></span>
+    </div>
+
+    <!-- More Details -->
+    <div class="my-3 collapse collapse-arrow">
+      <input type="checkbox" />
+      <div class="collapse-title bg-info text-lg font-bold rounded-xl">
+        More Details
+      </div>
+      <div class="collapse-content">
+
+        <div class="my-3 grid gap-5 lg:grid-cols-2">
+          <table class="w-11/12 mx-auto table-fixed text-left">
+            <tbody class="">
+              <tr>
+                <th class="py-3">Exchange</th>
+                <td class="py-3"><%= @stock.exchange %></td>
+              </tr>
+              <tr>
+                <th class="py-3">Sector</th>
+                <td class="py-3"><%= @stock.sector %></td>
+              </tr>
+              <tr>
+                <th class="py-3">Industry</th>
+                <td class="py-3"><%= @stock.industry %></td>
+              </tr>
+            </tbody>
+          </table>
+          <div>
+            <span class="block text-lg font-bold my-3">Description</span>
+            <div class="h-32 overflow-y-auto px-3">
+              <p><%= @stock.description %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <% if current_user.role == "trader" %>
+      <% if @portfolio && current_user.status == "approved" %>
+
+        <%= render "partials/notice", title: "Heads up!", check: { stock: @stock, property: @property } %>
+
+        <!-- Buy/Sell -->
+        <div class="my-10 w-11/12 mx-auto flex flex-col md:flex-row">
+          <%= render "transactions/buy_form" %>
+          <div class="divider md:divider-horizontal">OR</div>
+          <%= render "transactions/sell_form" %>
+        </div>
 
 
-<% if current_user.role == "trader" %>
+        <% if !@transactions.empty? %>
 
-  <% if @portfolio && current_user.status == "approved" %>
+          <div class="divider"></div>
 
-    <%= render "transactions/buy_form" %>
-    <%= render "transactions/sell_form" %>
+          <div class="my-3">
+            <h2 class="text-2xl lg:text-3xl mb-5 font-bold">Recent Transactions (<%= @stock.symbol %>)</h2>
 
-    <%= render "partials/notice", title: "Before you trade,", check: { stock: @stock, property: @property } %>
+            <div class="w-11/12 mx-auto overflow-x-auto">
 
-    <% if @transactions %>
+              <div class="flex justify-between py-3">
+                <div class="w-44 shrink-0 font-bold">Logo</div>
+                <div class="w-44 shrink-0 font-bold">Symbol</div>
+                <div class="w-44 shrink-0 font-bold">Type</div>
+                <div class="w-44 shrink-0 font-bold">Units</div>
+                <div class="w-44 shrink-0 font-bold">Price (per unit)</div>
+                <div class="w-44 shrink-0 font-bold">Date Completed</div>
+              </div>
 
-      <h2>Recent Transactions (<%= @stock.symbol %>)</h2>
+              <% @transactions.each do |transaction| %>
+              
+                <%= render "partials/transaction_item", transaction: transaction, time: true, admin: false %>
 
-      <% @transactions.each do |transaction| %>
+              <% end %>
 
-        <%= render "partials/transaction_item", transaction: transaction, time: false, admin: false %><br/>
-        
+            </div>
+          </div>
+
+        <% end %>
+      <% else %>
+
+        <%= render "partials/permit", title: "You're almost there!",
+            portfolio: @portfolio, status: current_user.status,
+            redirect: true %>
+
       <% end %>
     <% end %>
-  <% else %>
 
-    <%= render "partials/permit", title: "You're almost there!",
-        portfolio: @portfolio, status: current_user.status,
-        redirect: true %>
+    <% if current_user.role == "admin" %>
+    
+      <div class="divider"></div>
 
-  <% end %>
-<% end %>
+      <div class="my-3">
+        <h2 class="text-2xl lg:text-3xl mb-5 font-bold">Recent Transactions (<%= @stock.symbol %>)</h2>
 
-<% if current_user.role == "admin" %>
+        <% if !@recent_transactions.empty? %>
 
-  <h2>Recent Transactions (<%= @stock.symbol %>)</h2>
+          <div class="w-11/12 mx-auto overflow-x-auto">
 
-  <% if !@recent_transactions.empty? %>
+            <div class="flex justify-between py-3">
+              <div class="w-44 shrink-0 font-bold">Logo</div>
+              <div class="w-44 shrink-0 font-bold">Symbol</div>
+              <div class="w-44 shrink-0 font-bold">Type</div>
+              <div class="w-44 shrink-0 font-bold">Units</div>
+              <div class="w-44 shrink-0 font-bold">Price (per unit)</div>
+              <div class="w-44 shrink-0 font-bold">Date Completed</div>
+            </div>
 
-    <% @recent_transactions.each do |transaction| %>
-   
-      <%= render "partials/transaction_item", transaction: transaction, time: false, admin: true %><br/>
+          <% @recent_transactions.each do |transaction| %>
+        
+            <%= render "partials/transaction_item", transaction: transaction, time: false, admin: true %><br/>
 
+          <% end %>
+        <% else %>
+
+          <p>There are no recent transactions with this stock</p>
+
+        <% end %>
+
+      </div>
+      
     <% end %>
-  <% else %>
 
-    <p>There are no recent transactions with this stock</p>
+  </section>
+</main>
 
-  <% end %>
-<% end %>
+
+
 
 

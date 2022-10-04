@@ -1,6 +1,6 @@
 <h1>Edit Trader Account</h1>
 <%= link_to "Cancel", account_path(@account) %>
-<%= render "partials/navigation" %>
+<%= render "partials/navigation", page: "Account" %>
 
 <%= form_with(scope: @account, url: account_path(@account), method: :patch) do |f| %>
 

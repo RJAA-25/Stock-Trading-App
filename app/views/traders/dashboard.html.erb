@@ -1,49 +1,128 @@
 <%= render "partials/header" %>
-<%= render "partials/navigation" %>
+<main class="flex-1 flex pb-20 lg:pb-0">
+  <%= render "partials/navigation", page: "Dashboard" %>
+  <section class="flex-1 p-5 lg:px-10 max-w-full overflow-x-auto">
+    <%= render "partials/alerts" %>
 
-<h1>Trader Dashboard</h1>
+    <!-- Title -->
+    <h1 class="text-3xl lg:text-4xl mb-3 font-bold">Dashboard</h1>
 
-<div>
-  <h2>Account</h2>
-  <p>Name: <%= "#{current_user.last_name}, #{current_user.first_name}" %></p>
-  <p>Email: <%= current_user.email %></p>
-  <p><%= current_user.status.capitalize %></p>
-  <p>Balance: <%= format_currency(current_user.balance) %></p>
-  <%= link_to "Edit", user_edit_path(current_user.role) %>
-</div>
+    <!-- Balance/Worth -->
+    <label class="swap h-48 w-full my-3 bg-secondary text-center relative rounded-lg">
+      <input class="hidden" type="checkbox" />
+      <div class="swap-off">
+        <span class="font-bold text-4xl lg:text-6xl block"><%= format_currency(current_user.balance) %></span>
+        <span>ACCOUNT BALANCE</span>
+      </div>
+      <div class="swap-on">
 
-<% if @portfolio && current_user.status == "approved" %>
-  <% if !@portfolio.properties.empty? %>  
-  
-    <div>
-      <h2>Portfolio</h2>
-      <p>Worth: <%= format_currency(@portfolio.overall_worth) %></p>
-      <%= link_to "View", trader_portfolio_path %>
+        <span class="font-bold text-4xl lg:text-6xl block">
+          <%= @portfolio ? format_currency(current_user.portfolio.overall_worth) : "-- N/A --" %>
+        </span>
+
+        <span>PORTFOLIO WORTH</span>
+      </div>
+      <span class="absolute bottom-5 right-5 btn btn-circle btn-ghost btn-secondary">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+          stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zM12 2.25V4.5m5.834.166l-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243l-1.59-1.59" />
+        </svg>
+      </span>
+    </label>
+
+    <!-- Account Info -->
+    <div class="my-3">
+      <h2 class="text-2xl lg:text-3xl mb-5 font-bold">Account Information</h2>
+      <table class="w-11/12 mx-auto table-fixed text-left">
+        <thead class="hidden lg:table-header-group">
+          <tr class="">
+            <th class="py-3">First Name</th>
+            <th class="py-3">Last Name</th>
+            <th class="py-3">Email</th>
+            <th class="py-3">Status</th>
+          </tr>
+        </thead>
+        <tbody class="hidden lg:table-row-group">
+          <tr>
+            <td class="truncate"><%= current_user.first_name %></td>
+            <td class="truncate"><%= current_user.last_name %></td>
+            <td class="truncate"><%= current_user.email %></td>
+            <td class="capitalize"><%= current_user.status %></td>
+          </tr>
+        </tbody>
+        <tbody class="lg:hidden">
+          <tr>
+            <th class="py-3">First Name</th>
+            <td class="truncate py-3"><%= current_user.first_name %></td>
+          </tr>
+          <tr>
+            <th class="py-3">Last Name</th>
+            <td class="truncate py-3"><%= current_user.last_name %></td>
+          </tr>
+          <tr>
+            <th class="py-3">Email</th>
+            <td class="truncate py-3"><%= current_user.email %></td>
+          </tr>
+          <tr>
+            <th class="py-3">Status</th>
+            <td class="py-3 capitalize"><%= current_user.status %></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="flex justify-end mt-5">
+        <%= link_to "Edit Profile", user_edit_path(current_user.role),
+              class: "btn btn-primary" %>
+      </div>
     </div>
+      
+    <div class="divider"></div>
+    
+      <% if @portfolio && current_user.status == "approved" %>
+        <% if !@portfolio.properties.empty? %>  
 
-    <div>
-      <h2>Recent Transactions</h2>
-      <% @transactions.each do |transaction| %>
+          <!-- Latest Transactions -->
+          <div class="my-3">
+            <h2 class="text-2xl lg:text-3xl mb-5 font-bold">Latest Transactions</h2>
+            
+            <div class="w-11/12 mx-auto overflow-x-auto">
 
-        <%= render "partials/transaction_item", transaction: transaction, time: false, admin: false %><br/>
+              <div class="flex justify-between py-3">
+                <div class="w-44 shrink-0 font-bold">Logo</div>
+                <div class="w-44 shrink-0 font-bold">Symbol</div>
+                <div class="w-44 shrink-0 font-bold">Type</div>
+                <div class="w-44 shrink-0 font-bold">Units</div>
+                <div class="w-44 shrink-0 font-bold">Price (per unit)</div>
+                <div class="w-44 shrink-0 font-bold">Date Completed</div>
+              </div>
+
+              <% @transactions.each do |transaction| %>
+              
+                <%= render "partials/transaction_item", transaction: transaction, time: true, admin: false %>
+
+              <% end %>
+
+            </div>
+            <div class="mt-3 flex justify-end">
+                <%= link_to "See More", trader_transactions_path, class: "btn btn-primary" %>
+            </div>
+          </div>
+
+        <% else %>
+
+          <%= render "partials/permit", title: "Great! You're all set",
+              portfolio: @portfolio, status: current_user.status,
+              redirect: nil %>
+
+        <% end %>
+      <% else %>
+
+        <%= render "partials/permit", title: "You're almost there!",
+              portfolio: @portfolio, status: current_user.status,
+              redirect: true %>
 
       <% end %>
-      
-      <%= link_to "See More", trader_transactions_path %>
+
     </div>
-
-  <% else %>
-
-    <%= render "partials/permit", title: "Great! You're all set",
-        portfolio: @portfolio, status: current_user.status,
-        redirect: nil %>
-
-  <% end %>
-  
-<% else %>
-
-  <%= render "partials/permit", title: "You're almost there!",
-        portfolio: @portfolio, status: current_user.status,
-        redirect: true %>
-
-<% end %>
+  </section>
+</main>

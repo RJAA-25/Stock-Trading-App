@@ -1,22 +1,63 @@
 <%= render "partials/header" %>
-<%= render "partials/navigation" %>
-<h1>Transaction Details</h1>
-<%= link_to "All Transactions", trader_transactions_path %>
+<main class="flex-1 flex pb-20 lg:pb-0">
+  <%= render "partials/navigation", page: "Transactions" %>
+  <section class="flex-1 p-5 lg:px-10 max-w-full overflow-x-auto">
+    <%= render "partials/alerts" %>
 
-<div>
-  <div>
-    <img src="<%= @transaction.stock.logo %>" alt="<%= @transaction.stock.name %>">
-    <p><%= @transaction.stock.name %></p>
-    <p>Symbol: <%= @transaction.stock.symbol %></p>
-  </div>
-  <div>
-    <h2>Transaction No: <%= @transaction.id %></h2>
-    <p>Type: <%= @transaction.action.upcase %></p>
-    <p>Price: <%= format_currency(@transaction.price) %></p>
-    <p>Quantity: <%= @transaction.quantity %> <%= "unit".pluralize(@transaction.quantity) %></p>
-    <p>Total Amount: <%= format_currency(@transaction.total_amount) %></p>
-    <p>Completed:<%= @transaction.created_at.localtime.strftime("%l:%M %p %e %b %Y") %></p>
-  </div>
-</div>
+    <!-- Title -->
+    <h1 class="font-bold text-secondary">Transaction Information</h1>
+    <h2 class="text-3xl lg:text-4xl mb-3 font-bold ">Transaction # <%= @transaction.id %></h2>
 
-<%= link_to "See #{@transaction.stock.symbol} Profile", stock_path(@transaction.stock) %>
+    <div class="my-3 lg:my-5 w-full grid md:grid-cols-2 gap-5">
+      <div class="h-40 flex flex-col justify-center items-center bg-secondary rounded-xl">
+        <span class="block font-bold text-4xl lg:text-5xl"><%= format_currency(@transaction.total_amount) %></span>
+        <span>TOTAL</span>
+      </div>
+      <div class="w-full grid grid-cols-2 gap-5 place-items-center text-center p-5 ">
+        <div>
+          <span class="text-sm lg:text-base">TYPE</span>
+          <span class="block font-bold text-xl lg:text-2xl capitalize"><%= @transaction.action %></span>
+        </div>
+        <div>
+          <span class="text-sm lg:text-base">SYMBOL</span>
+          <span class="block font-bold text-xl lg:text-2xl"><%= @transaction.stock.symbol %></span>
+        </div>
+        <div>
+          <span class="text-sm lg:text-base">PRICE</span>
+          <span class="block font-bold text-xl lg:text-2xl"><%= format_currency(@transaction.price) %></span>
+        </div>
+        <div>
+          <span class="text-sm lg:text-base">UNITS</span>
+          <span class="block font-bold text-xl lg:text-2xl"><%= @transaction.quantity %></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="my-3 w-full grid md:grid-cols-2 gap-5">
+      <div>
+        <span>COMPANY</span>
+        <span class="font-bold text-xl md:text-2xl block"><%= @transaction.stock.name %></span>
+        <div class="my-3 flex items-center gap-5">
+          <img 
+          src="<%= @transaction.stock.logo %>" 
+          alt="<%= @transaction.stock.name %> Logo"
+          class="w-16 h-16 object-scale-down bg-white"/>
+          <%= link_to "Check #{@transaction.stock.symbol} Profile", stock_path(@transaction.stock), class: "btn btn-primary" %>
+        </div>
+      </div>
+      <div>
+        <div class="my-2">
+          <span>TRADER ACCOUNT</span>
+          <span class="font-bold text-xl md:text-2xl block"><%= current_user.first_name %> <%= current_user.last_name %></span>
+        </div>
+        <div class="my-2">
+          <span>DATE COMPLETED</span>
+          <span class="font-bold text-xl md:text-2xl block"><%= format_date(@transaction.created_at.localtime) %></span>
+        </div>
+      </div>
+    </div>
+
+  </section>
+</main>

@@ -1,5 +1,11 @@
-<%= form_with(url: buy_transaction_path(@stock)) do |f| %>
-  <%= f.label :buy %>
-  <%= f.number_field :buy, value:0, step: 0.1, min: 0.1 %>
-  <%= f.submit "Submit" %>
+<%= form_with(url: buy_transaction_path(@stock),class: "flex-1") do |f| %>
+
+  <%= f.number_field :buy,
+    step: 0.1, min: 0.1,
+    placeholder: "Purchase #{@stock.symbol} stocks",
+    class:"w-full rounded-xl text-center" %>
+
+  <%= f.submit "Buy",
+    class: "my-3 btn btn-primary btn-block" %>
+
 <% end %>

@@ -1,15 +1,18 @@
 <%= render "partials/header" %>
-<%= render "partials/navigation" %>
+<main class="flex-1 flex pb-20 lg:pb-0">
+  <%= render "partials/navigation", page: "Transactions" %>
+  <section class="flex-1 p-5 lg:px-10 max-w-full overflow-x-auto">
+    <%= render "partials/alerts" %>
+  
+    <!-- Title -->
+    <h1 class="text-3xl lg:text-4xl mb-3 font-bold ">Transactions</h1>
 
-<h1>Your Transactions</h1>
+    <div class="my-3">
+      <h2 class="text-2xl lg:text-3xl mb-5 font-bold">History</h2>
+      
+      <%= render "partials/transaction_group", collection: @all_transactions, admin: false %>
+      
+    </div>
 
-<h2>All Transactions</h2>
-<%= render "partials/transaction_group", collection: @all_transactions, admin: false %>
-
-<!--
-<h2>Buy Transactions</h2>
-<%= render "partials/transaction_group", collection: @buy_transactions, admin: false %>
-
-<h3>Sell Transactions</h3>
-<%= render "partials/transaction_group", collection: @sell_transactions, admin: true %>
--->
+  </section>
+</main>

@@ -1,16 +1,17 @@
-<%= link_to stock_path(stock) do %>
+<%= link_to stock_path(stock),
+  class: "flex items-center hover:bg-info border-r-4 border-secondary p-3 overflow-hidden" do %>
   
-  <div>
-    <img src="<%= stock.logo %>" 
-        alt="<%= stock.name %>" />
-    <div>
-      <h3><%= stock.name %></h3>
-      <p>Symbol: <%= stock.symbol %></p>
-      <p>Price: <%= format_currency(stock.latest_price) %></p>
-      <p><em>
-        Updated <%= stock.updated_at.localtime.strftime("%l:%M %p %e %b %Y") %>
-      </em></p>
-    </div>
+  <img 
+    src="<%= stock.logo %>" 
+    alt="<%= stock.name %> Logo"
+    class="object-scale-down bg-white w-20 h-20"/>
+  <div class="p-3 overflow-hidden flex-1">
+    <h3 class="font-bold text-xl truncate"><%= stock.name %></h3>
+    <span><%= stock.symbol %></span>
+  </div>
+  <div class="p-3 text-center">
+    <span class="block font-bold text-2xl"><%= format_currency(stock.latest_price) %></span>
+    <span class="text-xs">PRICE</span>
   </div>
 
 <% end %>

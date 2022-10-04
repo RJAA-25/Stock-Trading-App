@@ -29,6 +29,7 @@ module StockModule
   end
 
   def fetch_update(stock)
+    # client = IEX::Api::Client.new
     client = IEX::Api::Client.new(
       publishable_token: Rails.application.credentials.iex.sandbox[:publishable_token],
       secret_token: Rails.application.credentials.iex.sandbox[:secret_token],

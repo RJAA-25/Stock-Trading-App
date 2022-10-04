@@ -1,46 +1,90 @@
 <%= render "partials/header" %>
-<%= render "partials/navigation" %>
-
-<h1>Trader Portfolio </h1>
-
-<% if !@portfolio %>
-
-  <div>
-    <h2>Setup Portfolio</h3>
-    <p>All it takes is single click! It's that easy!</p>
-    <%= link_to "Setup", create_portfolio_path, data: { turbo_method: :post } %>		
-  </div>
-  
-<% else %>
-
-  <div>
-    <p>Total Worth: <%= format_currency(@portfolio.overall_worth) %></p>
-    <p>Properties Owned: <%= @properties.count %></p>
-  </div>
-
-<% end %>
-
-<% if @portfolio && current_user.status == "approved" %>
-
-  <h2>Properties</h2>
-
-  <% if !@properties.empty? %>
-    <% @properties.each do |property| %>
-
-      <%= render "partials/property_item", admin: false, property: property %> 
-
-    <% end %> 
-  <% else %>
+<main class="flex-1 flex pb-20 lg:pb-0">
+  <%= render "partials/navigation", page: "Portfolio" %>
+  <section class="flex-1 p-5 lg:px-10 max-w-full overflow-x-auto">
+    <%= render "partials/alerts" %>
     
-    <%= render "partials/permit", title: "Great! You're all set",
-      portfolio: @portfolio, status: current_user.status,
-      redirect: nil %>
+    <!-- Title -->
+    <h1 class="text-3xl lg:text-4xl mb-3 font-bold ">Portfolio</h1>
+  
 
-  <% end %>
-<% else %>
+    <% if !@portfolio %>
 
-  <%= render "partials/permit", title: "You're almost there!",
-        portfolio: @portfolio, status: current_user.status,
-        redirect: nil %>
+      <div class="mt-10">
+        <h2 class="text-2xl lg:text-3xl mb-5 font-bold">Setup</h2>
+        <p class="p-3">Setup your trader portfolio. All it takes is a single click!</p>
+        <p class="p-3 font-semibold">It's that easy!</p>
+        <div class="flex justify-end mt-5">
+          <%= link_to "Setup Portfolio", create_portfolio_path, data: { turbo_method: :post },
+          class: "btn btn-primary" %>		
+        </div>
+      </div>
+      
+    <% else %>
 
-<% end %>
+      <!-- Balance/Worth -->
+      <label class="swap h-48 w-full my-3 bg-secondary text-center relative rounded-lg ">
+        <input class="hidden" type="checkbox" />
+        <div class="swap-off">
+          <span class="font-bold text-4xl lg:text-6xl block"><%= format_currency(@portfolio.overall_worth) %></span>
+          <span>PORTFOLIO WORTH</span>
+        </div>
+        <div class="swap-on flex justify-evenly">
+          <div>
+            <span class="font-bold text-4xl lg:text-6xl block"><%= @properties.count %></span>
+            <span>PROPERTIES</span>
+          </div>
+          <div class="divider divider-horizontal"></div>
+          <div>
+            <span class="font-bold text-4xl lg:text-6xl block"><%= units_owned(@properties) %></span>
+            <span>UNITS OWNED</span>
+          </div>
+        </div>
+        <span class="absolute bottom-5 right-5 btn btn-circle btn-ghost btn-secondary">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zM12 2.25V4.5m5.834.166l-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243l-1.59-1.59" />
+          </svg>
+        </span>
+      </label>
+
+    <% end %>
+
+    <% if @portfolio && current_user.status == "approved" %>
+      <% if !@properties.empty? %>
+
+        <div class="divider"></div>
+        
+        <div class="my-3">
+          <h2 class="text-2xl lg:text-3xl mb-5 font-bold">Properties</h2>
+          <div class="overflow-x-auto grid md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-5 ">
+
+            <% @properties.each do |property| %>
+
+              <%= render "partials/property_item", admin: false, property: property %> 
+
+            <% end %> 
+
+        </div>
+
+      <% else %>
+        
+        <div class="divider"></div>
+        <%= render "partials/permit", title: "Great! You're all set",
+          portfolio: @portfolio, status: current_user.status,
+          redirect: nil %>
+
+      <% end %>
+    <% else %>
+
+      <div class="divider"></div> 
+      <%= render "partials/permit", title: "You're almost there!",
+            portfolio: @portfolio, status: current_user.status,
+            redirect: nil %>
+
+    <% end %>
+
+  </section>
+</main>
+ 

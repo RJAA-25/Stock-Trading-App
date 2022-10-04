@@ -15,4 +15,12 @@ module ApplicationHelper
   def set_date(record)
     record.created_at.localtime.to_date
   end
+
+  def units_owned(properties)
+    sum = 0
+    properties.each do |property|
+      sum += property.quantity
+    end
+    sum
+  end
 end

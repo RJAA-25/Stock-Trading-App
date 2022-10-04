@@ -1,26 +1,46 @@
-<div>
+<% if !collection.empty? %>
+<div class="w-11/12 mx-auto overflow-x-auto">
 
-    <% if !collection.empty? %>
+  <% current_date = set_date(collection.first) %>
+  <span class=" block font-bold text-2xl text-neutral mt-5 mb-5 sticky left-0"><%= current_date.strftime("%e %B %Y") %></span>
+  
+  <div class="flex justify-between py-3">
+    <div class="w-44 shrink-0 font-bold">Logo</div>
+    <div class="w-44 shrink-0 font-bold">Symbol</div>
+    <div class="w-44 shrink-0 font-bold">Type</div>
+    <div class="w-44 shrink-0 font-bold">Units</div>
+    <div class="w-44 shrink-0 font-bold">Price (per unit)</div>
+    <div class="w-44 shrink-0 font-bold">Date Completed</div>
+  </div>
 
-      <% current_date = set_date(collection.first) %>
-      <p><strong><%= current_date.strftime("%e %b %Y") %></strong></p>
+  <% collection.each do |instance| %>
 
-      <% collection.each do |instance| %>
+    <% if current_date != set_date(instance) %>
 
-        <% if current_date != set_date(instance) %>
+      <% current_date = set_date(instance) %>
+      <span class="block font-bold text-2xl text-neutral mt-10 mb-5 sticky left-0"><%= current_date.strftime("%e %B %Y") %></span>
 
-          <% current_date = set_date(instance) %>
-          <p><strong><%= current_date.strftime("%e %b %Y") %></strong></p>
-
-        <% end %>
-
-        <%= render "partials/transaction_item", transaction: instance, time: true, admin: admin %><br/>
-
-      <% end %>
-    <% else %>
-
-      <p>No Transactions have been made</p>
+      <div class="flex justify-between py-3">
+        <div class="w-44 shrink-0 font-bold">Logo</div>
+        <div class="w-44 shrink-0 font-bold">Symbol</div>
+        <div class="w-44 shrink-0 font-bold">Type</div>
+        <div class="w-44 shrink-0 font-bold">Units</div>
+        <div class="w-44 shrink-0 font-bold">Price (per unit)</div>
+        <div class="w-44 shrink-0 font-bold">Date Completed</div>
+      </div>
 
     <% end %>
 
-</div>
+    <%= render "partials/transaction_item", transaction: instance, time: true, admin: admin %><br/>
+
+  <% end %>
+
+  </div>
+<% else %>
+
+  <p class="text-center">No Transactions have been made</p>
+
+<% end %>
+      
+      
+

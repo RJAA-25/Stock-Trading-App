@@ -1,22 +1,50 @@
 <% admin ? path = "/admin/transactions/#{transaction.id}"
   : path ="/trader/transactions/#{transaction.id}" %>
 
-<%= link_to "#{path}" do %>
+<%= link_to "#{path}",
+  class: "block my-3 hover:bg-info" do %>
 
-  <% if time %>
+  <div class="flex justify-between items-center 
+    <%= transaction.action == "buy" ? "border-success" : "border-error" %>
+    border-l-8 py-3">
+    <span class="w-44 shrink-0">
+      <img 
+        src="<%= transaction.stock.logo %>" 
+        alt="<%= transaction.stock.name %> Logo"
+        class="ml-2 w-16 h-16 object-scale-down bg-white"/>
+    </span>
+    <span class="w-44 shrink-0"><%= transaction.stock.symbol %></span>
+    <span class="w-44 shrink-0 capitalize"><%= transaction.action %></span>
+    <span class="w-44 shrink-0"><%= transaction.quantity %></span>
+    <span class="w-44 shrink-0"><%= format_currency(transaction.price) %></span>
+    <span class="w-44 shrink-0"><%= format_date(transaction.created_at.localtime) %></span>
+  </div>
 
-    <span><%= transaction.created_at.localtime.strftime("%l:%M %p") %></span>
-    
-  <% end %>
-  <% if admin %>
+  <!-- 
+  <div class="flex justify-between items-center p-2">
+    <img
+      src="<%= transaction.stock.logo %>"
+      alt="<%= transaction.stock.name %> Logo"
+      class="w-16 h-16 object-scale-down"/>
 
-    <span><%= transaction.user.first_name %> <%= transaction.user.last_name %></span>
+    <% if admin %>
 
-  <% end %>
+      <span class="hidden sm:block"><%= transaction.user.first_name %> <%= transaction.user.last_name %></span>
 
-  <span><%= transaction.stock.symbol %></span>
-  <span><%= transaction.action.upcase %></span>
-  <span><%= transaction.quantity %> <%= "unit".pluralize(transaction.quantity) %></span>
-  <span><%= format_currency(transaction.price) %></span>
+    <% end %>
+
+    <span><%= transaction.stock.symbol %></span>
+    <span><%= transaction.action.upcase %></span>
+    <span class="hidden md:block"><%= transaction.quantity %> <%= "unit".pluralize(transaction.quantity) %></span>
+    <span class="hidden md:block"><%= format_currency(transaction.price) %></span>
+
+    <% if time %>
+
+      <span class="hidden md:block"><%= transaction.created_at.localtime.strftime("%l:%M %p %e %b %Y") %></span>
+      
+    <% end %>
+
+  </div>
+  -->
   
 <% end %>

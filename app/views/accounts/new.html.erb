@@ -1,6 +1,6 @@
 <h1>Create Trader Account</h1>
 <%= link_to "Cancel", accounts_path %>
-<%= render "partials/navigation" %>
+<%= render "partials/navigation", page: "Account" %>
 
 <%= form_with(scope: @account, url: accounts_path) do |f| %>
 
